@@ -8,11 +8,10 @@
 package Market;
 
 import Player.Heroes.*;
-import Display.*;
-import Display.MarketDisplay;
+import Display.MonstersAndHeroes.*;
 import Items.*;
 import Utilities.*;
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 import ErrorMessages.PrintErrorMessages;
 import java.util.*;
 
@@ -50,17 +49,17 @@ public class Market {
 
         List<String[]> fireSpellData = DataLoader.readData("FireSpells.txt");
         for (String[] data : fireSpellData) {
-            itemsForSale.add(new Spell(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]), GameConstants.SPELL_TYPE_FIRE));
+            itemsForSale.add(new Spell(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]), MonstersAndHeroesGameConstants.SPELL_TYPE_FIRE));
         }
 
         List<String[]> iceSpellData = DataLoader.readData("IceSpells.txt");
         for (String[] data : iceSpellData) {
-            itemsForSale.add(new Spell(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]), GameConstants.SPELL_TYPE_ICE));
+            itemsForSale.add(new Spell(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]), MonstersAndHeroesGameConstants.SPELL_TYPE_ICE));
         }
 
         List<String[]> lightningSpellData = DataLoader.readData("LightningSpells.txt");
         for (String[] data : lightningSpellData) {
-            itemsForSale.add(new Spell(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]), GameConstants.SPELL_TYPE_LIGHTNING));
+            itemsForSale.add(new Spell(data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]), MonstersAndHeroesGameConstants.SPELL_TYPE_LIGHTNING));
         }
     }
 

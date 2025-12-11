@@ -9,7 +9,7 @@
 
 import Player.Character;
 import Items.*;
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 
 import java.util.*;
 
@@ -195,7 +195,7 @@ public class Hero extends Character{
     public void addExperience(int experience) {
         this.experience += experience;
         // Check for level up repeatedly until no more level ups are possible
-        while (this.experience >= getLevel() * GameConstants.EXPERIENCE_THRESHOLD_MULTIPLIER) {
+        while (this.experience >= getLevel() * MonstersAndHeroesGameConstants.EXPERIENCE_THRESHOLD_MULTIPLIER) {
             levelUp();
         }
     }
@@ -209,11 +209,11 @@ public class Hero extends Character{
         int newLevel = getLevel();
         
         // Reset HP to level * HP_PER_LEVEL
-        setMaxHp(newLevel * GameConstants.HP_PER_LEVEL);
+        setMaxHp(newLevel * MonstersAndHeroesGameConstants.HP_PER_LEVEL);
         setHp(getMaxHp());
         
         // Increase MP by MP_INCREASE_ON_LEVEL_UP
-        maxMp = (int) (maxMp * GameConstants.MP_INCREASE_ON_LEVEL_UP);
+        maxMp = (int) (maxMp * MonstersAndHeroesGameConstants.MP_INCREASE_ON_LEVEL_UP);
         setMp(maxMp);
         
         // Stat increases are handled in subclasses
@@ -251,7 +251,7 @@ public class Hero extends Character{
      * @param item The item to sell.
      */
     public void sellItem(Item item) {
-        this.gold += item.getPrice() / GameConstants.SELL_PRICE_DIVISOR;
+        this.gold += item.getPrice() / MonstersAndHeroesGameConstants.SELL_PRICE_DIVISOR;
         this.inventory.remove(item);
     }
 
@@ -261,7 +261,7 @@ public class Hero extends Character{
      * @return The total experience points gained.
      */
     public int xpForMonsters(int count) {
-        return count * GameConstants.EXPERIENCE_PER_MONSTER;
+        return count * MonstersAndHeroesGameConstants.EXPERIENCE_PER_MONSTER;
     }
 
     /**
@@ -270,7 +270,7 @@ public class Hero extends Character{
      * @return The amount of gold rewarded.
      */
     public int goldReward(int highestLevel) {
-        return highestLevel * GameConstants.GOLD_PER_LEVEL;
+        return highestLevel * MonstersAndHeroesGameConstants.GOLD_PER_LEVEL;
     }
 
     /**
@@ -278,7 +278,7 @@ public class Hero extends Character{
      * @return The HP after revival.
      */
     public int hpAfterDeath() {
-        return (int)(getMaxHp() * GameConstants.DEATH_HP_PENALTY);
+        return (int)(getMaxHp() * MonstersAndHeroesGameConstants.DEATH_HP_PENALTY);
     }
 
     /**
@@ -286,7 +286,7 @@ public class Hero extends Character{
      * @return The MP after revival.
      */
     public int mpAfterDeath() {
-        return (int)(getMaxMp() * GameConstants.DEATH_MP_PENALTY);
+        return (int)(getMaxMp() * MonstersAndHeroesGameConstants.DEATH_MP_PENALTY);
     }
 
     /**

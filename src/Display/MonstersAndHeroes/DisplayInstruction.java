@@ -1,13 +1,10 @@
-package Display;
+package Display.MonstersAndHeroes;
 
 import Color.Color;
 
 public class DisplayInstruction {
     private static Color c = new Color();
 
-    /**
-     * Displays the welcome instructions and story introduction.
-     */
     public static void welcomeInstructions() {
         System.out.println();
         System.out.println(c.LightPink + c.Bold + "Welcome Traveler......."+ c.Reset);
@@ -27,9 +24,6 @@ public class DisplayInstruction {
         System.out.println(c.Yellow + "How vast shall your realm be?" + c.Reset);
     }
 
-    /**
-     * Displays the main game instructions, including movement, actions, and battle information.
-     */
     public static void instructions(){
         System.out.println();
         System.out.println(c.Bold + c.Pink + c.Bg_White + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + c.Reset);
@@ -42,7 +36,7 @@ public class DisplayInstruction {
         System.out.println("          A  - move left           D  - move right" + c.Reset);
         System.out.println();
         System.out.println(c.LightPink + "At any time, you can check how your heroes are doing by clicking 'I': " + c.Reset);
-        System.out.println(c.Pink + c.Bold + "         I  - View your party’s stats, HP/MP, gold, and inventory" + c.Reset);
+        System.out.println(c.Pink + c.Bold + "         I  - View your party's stats, HP/MP, gold, and inventory" + c.Reset);
         System.out.println();
         System.out.println(c.LightPink +"If you step onto a Market tile, you can shop for powerful gear:" +c.Reset);
         System.out.println(c.Pink + c.Bold + "         M  - Enter the market (only when you are standing on a Market tile)" + c.Reset);
@@ -87,9 +81,6 @@ public class DisplayInstruction {
         System.out.println();
     }
 
-    /**
-     * Displays the heroes instructions.
-     */
     public static void heroesInstructions() {
         System.out.println();
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -104,5 +95,5 @@ public class DisplayInstruction {
         System.out.println("You may recruit up to " + c.Bold + "3 champions" + c.Reset + " to stand at your side.");
         System.out.println();
     }
-
 }
+

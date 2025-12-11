@@ -7,7 +7,7 @@
 
  package Player.Heroes;
 
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 
 public class Warrior  extends Hero {
     /**
@@ -21,7 +21,7 @@ public class Warrior  extends Hero {
      * @param startingExperience The starting experience of the warrior.
      */
     public Warrior(String name, int mana, int strength, int agility, int dexterity, int startingMoney, int startingExperience) {
-        super(name, GameConstants.HERO_STARTING_LEVEL, GameConstants.HERO_STARTING_HP, mana, strength, agility, dexterity, startingMoney, startingExperience);
+        super(name, MonstersAndHeroesGameConstants.HERO_STARTING_LEVEL, MonstersAndHeroesGameConstants.HERO_STARTING_HP, mana, strength, agility, dexterity, startingMoney, startingExperience);
     }
 
     /**

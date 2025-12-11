@@ -7,7 +7,7 @@
 
  package Player.Monsters;
 
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 
 public class Exoskeleton extends Monster {
     /**
@@ -20,8 +20,8 @@ public class Exoskeleton extends Monster {
      * @param dodgeChance The dodge chance of the exoskeleton.
      */
     public Exoskeleton(String name, int level, int damage, int defense, int dodgeChance) {
-        super(name, level, level * GameConstants.MONSTER_HP_PER_LEVEL, damage, defense, dodgeChance);
+        super(name, level, level * MonstersAndHeroesGameConstants.MONSTER_HP_PER_LEVEL, damage, defense, dodgeChance);
         // Exoskeletons have increased defense
-        setDefense((int) (getDefense() * GameConstants.MONSTER_TYPE_BONUS));
+        setDefense((int) (getDefense() * MonstersAndHeroesGameConstants.MONSTER_TYPE_BONUS));
     }
 }

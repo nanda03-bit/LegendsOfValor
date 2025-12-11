@@ -7,7 +7,7 @@
 
  package Player.Monsters;
 
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 
 public class Spirit extends Monster {
     /**
@@ -20,8 +20,8 @@ public class Spirit extends Monster {
      * @param dodgeChance The dodge chance of the spirit.
      */
     public Spirit(String name, int level, int damage, int defense, int dodgeChance) {
-        super(name, level, level * GameConstants.MONSTER_HP_PER_LEVEL, damage, defense, dodgeChance);
+        super(name, level, level * MonstersAndHeroesGameConstants.MONSTER_HP_PER_LEVEL, damage, defense, dodgeChance);
         // Spirits have increased dodge ability
-        setDodgeChance((int) (getDodgeChance() * GameConstants.MONSTER_TYPE_BONUS));
+        setDodgeChance((int) (getDodgeChance() * MonstersAndHeroesGameConstants.MONSTER_TYPE_BONUS));
     }
 }

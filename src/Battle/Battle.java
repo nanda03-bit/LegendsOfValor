@@ -10,11 +10,11 @@ package Battle;
 
 import Player.Heroes.Hero;
 import Player.Monsters.*;
-import Display.*;
+import Display.MonstersAndHeroes.*;
 import Display.Statistics.StatisticsDisplay;
 import Utilities.DataLoader;
 import Utilities.Percentages;
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 import ErrorMessages.*;
 import Items.*;
 import java.util.*;
@@ -29,10 +29,10 @@ public class Battle implements IBattle {
     // Inner class used to store and manage temporary spell effects on a monster,
     // such as damage over time or reduced stats.
     private static class SpellEffect {
-        double damageMultiplier = GameConstants.BASE_DAMAGE_MULTIPLIER;
-        double defenseMultiplier = GameConstants.BASE_DAMAGE_MULTIPLIER;
-        double dodgeMultiplier = GameConstants.BASE_DAMAGE_MULTIPLIER;
-        int roundsRemaining = GameConstants.SPELL_DEBUFF_ROUNDS;
+        double damageMultiplier = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
+        double defenseMultiplier = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
+        double dodgeMultiplier = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
+        int roundsRemaining = MonstersAndHeroesGameConstants.SPELL_DEBUFF_ROUNDS;
     }
 
     /**
@@ -231,7 +231,7 @@ public class Battle implements IBattle {
             defenseMult = effect.defenseMultiplier;
         }
         else {
-            defenseMult = GameConstants.BASE_DAMAGE_MULTIPLIER;
+            defenseMult = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
         }
         // Calculating the monster's effective defense by multiplying its base defense withthe active defense multiplier
         int actualDefense = (int) (target.getDefense() * defenseMult);
@@ -352,21 +352,21 @@ public class Battle implements IBattle {
      */
     private void applySpellDebuff(Monster monster, String spellType, SpellEffect effect) {
         // Fire spells weaken the monster's damage output
-        if (GameConstants.SPELL_TYPE_FIRE.equals(spellType)) {
-            effect.damageMultiplier = GameConstants.SPELL_DEBUFF_MULTIPLIER;
-            effect.roundsRemaining = GameConstants.SPELL_DEBUFF_ROUNDS;
+        if (MonstersAndHeroesGameConstants.SPELL_TYPE_FIRE.equals(spellType)) {
+            effect.damageMultiplier = MonstersAndHeroesGameConstants.SPELL_DEBUFF_MULTIPLIER;
+            effect.roundsRemaining = MonstersAndHeroesGameConstants.SPELL_DEBUFF_ROUNDS;
         }
 
         // Ice spells weaken the monster's defense
-        else if (GameConstants.SPELL_TYPE_ICE.equals(spellType)) {
-            effect.defenseMultiplier = GameConstants.SPELL_DEBUFF_MULTIPLIER;
-            effect.roundsRemaining = GameConstants.SPELL_DEBUFF_ROUNDS;
+        else if (MonstersAndHeroesGameConstants.SPELL_TYPE_ICE.equals(spellType)) {
+            effect.defenseMultiplier = MonstersAndHeroesGameConstants.SPELL_DEBUFF_MULTIPLIER;
+            effect.roundsRemaining = MonstersAndHeroesGameConstants.SPELL_DEBUFF_ROUNDS;
         }
 
         // Lightning spells weaken the monster's dodge chance
-        else if (GameConstants.SPELL_TYPE_LIGHTNING.equals(spellType)) {
-            effect.dodgeMultiplier = GameConstants.SPELL_DEBUFF_MULTIPLIER;
-            effect.roundsRemaining = GameConstants.SPELL_DEBUFF_ROUNDS;
+        else if (MonstersAndHeroesGameConstants.SPELL_TYPE_LIGHTNING.equals(spellType)) {
+            effect.dodgeMultiplier = MonstersAndHeroesGameConstants.SPELL_DEBUFF_MULTIPLIER;
+            effect.roundsRemaining = MonstersAndHeroesGameConstants.SPELL_DEBUFF_ROUNDS;
         }
     }
 
@@ -512,7 +512,7 @@ public class Battle implements IBattle {
                     damageMult = effect.damageMultiplier;
                 }
                 else {
-                    damageMult = GameConstants.BASE_DAMAGE_MULTIPLIER;
+                    damageMult = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
                 }
                 int baseDamage = (int) (monster.getBaseDamage() * damageMult * Percentages.DAMAGE);
 
@@ -556,7 +556,7 @@ public class Battle implements IBattle {
             dodgeMult = effect.dodgeMultiplier;
         }
         else {
-            dodgeMult = GameConstants.BASE_DAMAGE_MULTIPLIER;
+            dodgeMult = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
         }
         return Math.random() < (monster.getDodgeChance() * 0.01 * dodgeMult);
     }
@@ -606,8 +606,8 @@ public class Battle implements IBattle {
         // Regenerate HP and MP for alive heroes
         for (Hero hero : heroes) {
             if (hero.isAlive()) {
-                int hpRegen = Math.max(GameConstants.MIN_REGENERATION, (int) (hero.getHp() * GameConstants.REGENERATION_PERCENTAGE));
-                int mpRegen = Math.max(GameConstants.MIN_REGENERATION, (int) (hero.getMp() * GameConstants.REGENERATION_PERCENTAGE));
+                int hpRegen = Math.max(MonstersAndHeroesGameConstants.MIN_REGENERATION, (int) (hero.getHp() * MonstersAndHeroesGameConstants.REGENERATION_PERCENTAGE));
+                int mpRegen = Math.max(MonstersAndHeroesGameConstants.MIN_REGENERATION, (int) (hero.getMp() * MonstersAndHeroesGameConstants.REGENERATION_PERCENTAGE));
                 hero.setHp(Math.min(hero.getHp() + hpRegen, hero.getMaxHp()));
                 hero.setMp(Math.min(hero.getMp() + mpRegen, hero.getMaxMp()));
             }
@@ -624,9 +624,9 @@ public class Battle implements IBattle {
             effect.roundsRemaining--;
             if (effect.roundsRemaining <= 0) {
                 // If the debuff duration is over, reset all multipliers to normal, everything is put back to normal
-                effect.damageMultiplier = GameConstants.BASE_DAMAGE_MULTIPLIER;
-                effect.defenseMultiplier = GameConstants.BASE_DAMAGE_MULTIPLIER;
-                effect.dodgeMultiplier = GameConstants.BASE_DAMAGE_MULTIPLIER;
+                effect.damageMultiplier = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
+                effect.defenseMultiplier = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
+                effect.dodgeMultiplier = MonstersAndHeroesGameConstants.BASE_DAMAGE_MULTIPLIER;
             }
         }
     }
@@ -650,16 +650,16 @@ public class Battle implements IBattle {
             for (Hero hero : heroes) {
                 if (hero.isAlive()) {
                     // Living heroes get XP and gold
-                    int experienceGained = monsterCount * GameConstants.EXPERIENCE_PER_MONSTER;
-                    int goldGained = highestLevel * GameConstants.GOLD_PER_LEVEL;
+                    int experienceGained = monsterCount * MonstersAndHeroesGameConstants.EXPERIENCE_PER_MONSTER;
+                    int goldGained = highestLevel * MonstersAndHeroesGameConstants.GOLD_PER_LEVEL;
                     hero.addExperience(experienceGained);
                     hero.setGold(hero.getGold() + goldGained);
                     Display.heroRewards(hero, experienceGained, goldGained);
                 }
                 else {
                     // Fainted heroes revive with half HP and MP but get no rewards
-                    hero.setHp(Math.max(1, (int)(hero.getMaxHp() * GameConstants.DEATH_HP_PENALTY)));
-                    hero.setMp(Math.max(1, (int)(hero.getMaxMp() * GameConstants.DEATH_MP_PENALTY)));
+                    hero.setHp(Math.max(1, (int)(hero.getMaxHp() * MonstersAndHeroesGameConstants.DEATH_HP_PENALTY)));
+                    hero.setMp(Math.max(1, (int)(hero.getMaxMp() * MonstersAndHeroesGameConstants.DEATH_MP_PENALTY)));
                     Display.heroRevived(hero);
                 }
             }

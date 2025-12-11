@@ -13,14 +13,14 @@ import Battle.Battle;
 import ErrorMessages.PrintErrorMessages;
 import Player.Heroes.*;
 import Utilities.*;
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 import Market.Market;
-import World.World;
-import Display.*;
+import board.monstersandheroes.Board;
+import Display.MonstersAndHeroes.*;
 import Display.Statistics.StatisticsDisplay;
 
 public class MonstersAndHeroes {
-    private World world;
+    private Board world;
     private List<Hero> party;
     private Market market;
     private static PrintErrorMessages error = new PrintErrorMessages();
@@ -41,7 +41,7 @@ public class MonstersAndHeroes {
      */
     private void initialize() {
         int worldSize = Input.getWorldSize();
-        world = new World(worldSize);
+        world = new Board(worldSize);
         DisplayInstruction.heroesInstructions();
         party = createParty();
 
@@ -80,7 +80,7 @@ public class MonstersAndHeroes {
         List<String[]> paladinData = DataLoader.readData("Paladins.txt");
 
         switch (heroType) {
-            case GameConstants.WARRIOR_TYPE:
+            case MonstersAndHeroesGameConstants.WARRIOR_TYPE:
                 if (warriorData.isEmpty()) {
                     error.noWarriorHero();
                     return null;
@@ -90,7 +90,7 @@ public class MonstersAndHeroes {
                 int warriorChoice = Input.getHeroChoice(warriorData.size());
                 String[] warrior = warriorData.get(warriorChoice);
                 return new Warrior(warrior[0], Integer.parseInt(warrior[1]), Integer.parseInt(warrior[2]), Integer.parseInt(warrior[3]), Integer.parseInt(warrior[4]), Integer.parseInt(warrior[5]), Integer.parseInt(warrior[6]));
-            case GameConstants.SORCERER_TYPE:
+            case MonstersAndHeroesGameConstants.SORCERER_TYPE:
                 if (sorcererData.isEmpty()) {
                     error.noSorcererHero();
                     return null;
@@ -99,7 +99,7 @@ public class MonstersAndHeroes {
                 int sorcererChoice = Input.getHeroChoice(sorcererData.size());
                 String[] sorcerer = sorcererData.get(sorcererChoice);
                 return new Sorcerer(sorcerer[0], Integer.parseInt(sorcerer[1]), Integer.parseInt(sorcerer[2]), Integer.parseInt(sorcerer[3]), Integer.parseInt(sorcerer[4]), Integer.parseInt(sorcerer[5]), Integer.parseInt(sorcerer[6]));
-            case GameConstants.PALADIN_TYPE:
+            case MonstersAndHeroesGameConstants.PALADIN_TYPE:
                 if (paladinData.isEmpty()) {
                     error.noPaladinHero();
                     return null;

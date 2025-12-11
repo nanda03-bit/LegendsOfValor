@@ -7,7 +7,7 @@
 
  package Player.Monsters;
 
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 
 public class Dragon extends Monster {
     /**
@@ -20,8 +20,8 @@ public class Dragon extends Monster {
      * @param dodgeChance The dodge chance of the dragon.
      */
     public Dragon(String name, int level, int damage, int defense, int dodgeChance) {
-        super(name, level, level * GameConstants.MONSTER_HP_PER_LEVEL, damage, defense, dodgeChance);
+        super(name, level, level * MonstersAndHeroesGameConstants.MONSTER_HP_PER_LEVEL, damage, defense, dodgeChance);
         // Dragons have increased base damage
-        setBaseDamage((int) (getBaseDamage() * GameConstants.MONSTER_TYPE_BONUS));
+        setBaseDamage((int) (getBaseDamage() * MonstersAndHeroesGameConstants.MONSTER_TYPE_BONUS));
     }
 }

@@ -1,24 +1,14 @@
-/**
- * Filename: MarketDisplay.java
- * Author: Nandana Shashi
- * Date: 2025-Nov-10
- * Description: Handles all market-related display operations including category menus and item listings.
- */
-
-package Display;
+package Display.MonstersAndHeroes;
 
 import Player.Heroes.Hero;
 import Items.*;
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 import Color.Color;
 import java.util.*;
 
 public class MarketDisplay {
     private static Color c = new Color();
     
-    /**
-     * Displays the main market menu with categories.
-     */
     public static void showMarketMenu(Hero hero) {
         System.out.println();
         System.out.println(c.Blue + "╔══════════════════════════════════════════════════════════════════════════════╗");
@@ -38,12 +28,6 @@ public class MarketDisplay {
         System.out.println(c.Blue + "╚══════════════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
     }
     
-    /**
-     * Displays items of a specific category.
-     * @param items The list of items to display.
-     * @param categoryName The name of the category.
-     * @param hero The hero viewing the items.
-     */
     public static void showCategoryItems(List<Item> items, String categoryName, Hero hero) {
         System.out.println();
         System.out.println(c.Blue + "╔══════════════════════════════════════════════════════════════════════╗");
@@ -55,11 +39,9 @@ public class MarketDisplay {
             System.out.println(c.Blue + "║" + c.Reset + "                    No " + categoryName.toLowerCase() + " available                     " + c.Blue + "║");
         }
         else {
-            // Header
             System.out.println(c.Blue + "║" + c.Bold + String.format(" %-4s %-29s %-14s %-8s %-9s ", "#", "Item Name", "Type", "Lvl", "Price") + c.Blue + "║" + c.Reset);
             System.out.println(c.Blue + "╠══════════════════════════════════════════════════════════════════════╣" + c.Reset);
             
-            // Items
             for (int i = 0; i < items.size(); i++) {
                 Item item = items.get(i);
                 String itemType = "";
@@ -87,7 +69,6 @@ public class MarketDisplay {
                     itemName = itemName.substring(0, 27) + "...";
                 }
                 
-                // Check if hero can afford it
                 String priceColor = c.Reset;
                 if (hero.getGold() < item.getPrice()) {
                     priceColor = c.Red;
@@ -103,20 +84,10 @@ public class MarketDisplay {
         System.out.println(c.Blue + "╚══════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
     }
     
-    /**
-     * Displays all items in the market.
-     * @param items The list of all items.
-     * @param hero The hero viewing the items.
-     */
     public static void showAllItems(List<Item> items, Hero hero) {
         showCategoryItems(items, "ALL ITEMS", hero);
     }
     
-    /**
-     * Displays hero selection menu for item purchase.
-     * @param party The list of heroes in the party.
-     * @return The selected hero index, or -1 to cancel.
-     */
     public static int showHeroSelection(List<Hero> party) {
         System.out.println();
         System.out.println(c.Green + "╔═══════════════════════════════════════════════════════════════════════╗");
@@ -134,9 +105,6 @@ public class MarketDisplay {
         return Input.getHeroSelection(party.size());
     }
     
-    /**
-     * Displays welcome message for the market.
-     */
     public static void marketWelcome() {
         System.out.println();
         System.out.println(c.Blue + "╔═════════════════════════════════════════════════════════════════════════════╗");
@@ -147,18 +115,12 @@ public class MarketDisplay {
         System.out.println();
     }
     
-    /**
-     * Displays success message for buying an item.
-     */
     public static void buySuccess(Hero hero, Item item) {
         System.out.println(c.Green + hero.getName() + c.Reset + " successfully bought " + c.Bold + item.getName() + c.Reset + "!");
         System.out.println("Remaining Gold: " + c.Yellow + c.Bold + hero.getGold() + c.Reset);
         System.out.println();
     }
     
-    /**
-     * Displays failure message for buying an item.
-     */
     public static void buyFail(Hero hero, Item item) {
         System.out.println(c.Red + "Purchase failed!" + c.Reset);
         if (hero.getGold() < item.getPrice()) {
@@ -170,9 +132,6 @@ public class MarketDisplay {
         System.out.println();
     }
     
-    /**
-     * Displays hero inventory for selling.
-     */
     public static void showHeroInventoryForSell(Hero hero) {
         Color c = new Color();
         System.out.println(c.Green + "\n╔═══════════════════════════════════════════════════════════════════════╗");
@@ -210,7 +169,7 @@ public class MarketDisplay {
                     itemName = itemName.substring(0, 32) + "...";
                 }
                 
-                int sellPrice = item.getPrice() / GameConstants.SELL_PRICE_DIVISOR;
+                int sellPrice = item.getPrice() / MonstersAndHeroesGameConstants.SELL_PRICE_DIVISOR;
                 
                 System.out.println(c.Green + "║" + c.Reset + colorCode + String.format(" %-4d %-35s %-15s %-10d", 
                     (i + 1), itemName, itemType, sellPrice) + c.Green + "║" + c.Reset);
@@ -220,12 +179,9 @@ public class MarketDisplay {
         System.out.println(c.Green + "╚═══════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
     }
     
-    /**
-     * Displays success message for selling an item.
-     */
     public static void sellSuccess(Hero hero, Item item) {
         System.out.println(c.Green + hero.getName() + c.Reset + " sold " + c.Bold + item.getName() + c.Reset + " for " + 
-            c.Green + c.Bold + (item.getPrice() / GameConstants.SELL_PRICE_DIVISOR) + c.Reset + " gold!");
+            c.Green + c.Bold + (item.getPrice() / MonstersAndHeroesGameConstants.SELL_PRICE_DIVISOR) + c.Reset + " gold!");
         System.out.println("New Gold: " + c.Green + c.Bold + hero.getGold() + c.Reset);
         System.out.println();
     }

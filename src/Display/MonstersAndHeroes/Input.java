@@ -1,34 +1,28 @@
-package Display;
+package Display.MonstersAndHeroes;
 
 import Color.Color;
 import ErrorMessages.PrintErrorMessages;
-import Utilities.GameConstants;
+import Utilities.MonstersAndHeroesGameConstants;
 import java.util.*;
-
 
 public class Input {
     private static Scanner scanner = new Scanner(System.in);
     private static PrintErrorMessages error = new PrintErrorMessages();
     private static Color c = new Color();
 
-    /**
-     * Gets the desired party size from the player.
-     * @return The party size.
-     */
     public static int getPartySize(){
         while (true){
             try{
-                System.out.print(c.Yellow + "Choose the number of warriors who will face the shadows beside you (" + GameConstants.MIN_PARTY_SIZE + "-" + GameConstants.MAX_PARTY_SIZE + "):    "+ c.Reset);
+                System.out.print(c.Yellow + "Choose the number of warriors who will face the shadows beside you (" + MonstersAndHeroesGameConstants.MIN_PARTY_SIZE + "-" + MonstersAndHeroesGameConstants.MAX_PARTY_SIZE + "):    "+ c.Reset);
                 int size = scanner.nextInt();
-                if (size >= GameConstants.MIN_PARTY_SIZE && size <= GameConstants.MAX_PARTY_SIZE) {
+                if (size >= MonstersAndHeroesGameConstants.MIN_PARTY_SIZE && size <= MonstersAndHeroesGameConstants.MAX_PARTY_SIZE) {
                     return size;
                 }
                 else{
                     error.invalidSizeInput();
-                    System.out.println("Number of warriors must be between " + GameConstants.MIN_PARTY_SIZE + " and " + GameConstants.MAX_PARTY_SIZE + ".");
+                    System.out.println("Number of warriors must be between " + MonstersAndHeroesGameConstants.MIN_PARTY_SIZE + " and " + MonstersAndHeroesGameConstants.MAX_PARTY_SIZE + ".");
                 }
             }
-
             catch (InputMismatchException e){
                 error.invalidInput();
                 scanner.nextLine();
@@ -36,24 +30,19 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the hero type selection from the player.
-     * @return The hero type.
-     */
     public static int getHeroType() {
         while (true) {
             try {
-                System.out.print(c.Yellow + "Enter hero type (" + GameConstants.MIN_HERO_TYPE + "-" + GameConstants.MAX_HERO_TYPE + "): " + c.Reset);
+                System.out.print(c.Yellow + "Enter hero type (" + MonstersAndHeroesGameConstants.MIN_HERO_TYPE + "-" + MonstersAndHeroesGameConstants.MAX_HERO_TYPE + "): " + c.Reset);
                 int type = scanner.nextInt();
-                if (type >= GameConstants.MIN_HERO_TYPE && type <= GameConstants.MAX_HERO_TYPE) {
+                if (type >= MonstersAndHeroesGameConstants.MIN_HERO_TYPE && type <= MonstersAndHeroesGameConstants.MAX_HERO_TYPE) {
                     return type;
                 }
                 else {
                     error.invalidActionInput();
-                    System.out.println("Hero type must be " + GameConstants.MIN_HERO_TYPE + ", " + (GameConstants.MIN_HERO_TYPE + 1) + ", or " + GameConstants.MAX_HERO_TYPE + ".");
+                    System.out.println("Hero type must be " + MonstersAndHeroesGameConstants.MIN_HERO_TYPE + ", " + (MonstersAndHeroesGameConstants.MIN_HERO_TYPE + 1) + ", or " + MonstersAndHeroesGameConstants.MAX_HERO_TYPE + ".");
                 }
             }
-
             catch (InputMismatchException e) {
                 error.invalidInput();
                 scanner.nextLine();
@@ -61,11 +50,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the hero selection from the player.
-     * @param max The maximum number of choices.
-     * @return The chosen hero index.
-     */
     public static int getHeroChoice(int max) {
         while (true) {
             try {
@@ -86,10 +70,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the main game action from the player (e.g., move, open map, quit).
-     * @return The chosen action character.
-     */
     public static char getAction() {
         while (true) {
             try {
@@ -113,10 +93,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the battle action from the player.
-     * @return The chosen battle action character.
-     */
     public static char getBattleAction() {
         while (true) {
             try {
@@ -139,10 +115,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the market action from the player.
-     * @return The chosen market action character.
-     */
     public static char getMarketAction() {
         while (true) {
             try {
@@ -167,11 +139,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the player's choice in the market.
-     * @param max The maximum number of choices.
-     * @return The chosen item index, or -1 to go back.
-     */
     public static int getMarketChoice(int max) {
         while (true){
             try{
@@ -179,7 +146,7 @@ public class Input {
                 String input = scanner.next();
                 int choice = Integer.parseInt(input);
                 if (choice == 0) {
-                    return -1; // Special value to indicate going back
+                    return -1;
                 }
                 if (choice >= 1 && choice <= max){
                     return choice - 1;
@@ -196,22 +163,18 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the desired world size from the player.
-     * @return The world size.
-     */
     public static int getWorldSize() {
         while (true) {
             try {
-                System.out.print("Your Realm size can be between (" + GameConstants.MIN_WORLD_SIZE + "-" + GameConstants.MAX_WORLD_SIZE + "): ");
+                System.out.print("Your Realm size can be between (" + MonstersAndHeroesGameConstants.MIN_WORLD_SIZE + "-" + MonstersAndHeroesGameConstants.MAX_WORLD_SIZE + "): ");
                 int size = scanner.nextInt();
                 System.out.println();
-                if (size >= GameConstants.MIN_WORLD_SIZE && size <= GameConstants.MAX_WORLD_SIZE) {
+                if (size >= MonstersAndHeroesGameConstants.MIN_WORLD_SIZE && size <= MonstersAndHeroesGameConstants.MAX_WORLD_SIZE) {
                     return size;
                 }
                 else {
                     error.invalidActionInput();
-                    System.out.println("World size must be between " + GameConstants.MIN_WORLD_SIZE + " and " + GameConstants.MAX_WORLD_SIZE + ".");
+                    System.out.println("World size must be between " + MonstersAndHeroesGameConstants.MIN_WORLD_SIZE + " and " + MonstersAndHeroesGameConstants.MAX_WORLD_SIZE + ".");
                 }
             }
             catch (InputMismatchException e) {
@@ -221,11 +184,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the player's target selection in battle.
-     * @param max The maximum number of targets.
-     * @return The chosen target index.
-     */
     public static int getTargetChoice(int max) {
         while (true) {
             try{
@@ -246,11 +204,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the player's spell selection in battle.
-     * @param max The maximum number of spells.
-     * @return The chosen spell index.
-     */
     public static int getSpellChoice(int max){
         while (true){
             try{
@@ -271,11 +224,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the player's potion selection in battle.
-     * @param max The maximum number of potions.
-     * @return The chosen potion index.
-     */
     public static int getPotionChoice(int max) {
         while (true) {
             try {
@@ -296,11 +244,6 @@ public class Input {
         }
     }
 
-    /**
-     * Gets the player's item selection for equipping.
-     * @param max The maximum number of items.
-     * @return The chosen item index.
-     */
     public static int getEquipChoice(int max) {
         while (true){
             try{
@@ -347,7 +290,7 @@ public class Input {
                 System.out.print(c.Yellow + "Select hero (1-" + partySize + ", 0 to cancel): " + c.Reset);
                 int choice = scanner.nextInt();
                 if (choice == 0) {
-                    return -1; // Cancel
+                    return -1;
                 }
                 if (choice >= 1 && choice <= partySize) {
                     return choice - 1;
@@ -363,6 +306,5 @@ public class Input {
             }
         }
     }
-
 }
 
