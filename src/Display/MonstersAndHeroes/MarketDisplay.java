@@ -11,36 +11,36 @@ public class MarketDisplay {
     
     public static void showMarketMenu(Hero hero) {
         System.out.println();
-        System.out.println(c.Blue + "╔══════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println(c.Blue + "║" + c.Bold + "                                MARKET MENU                                   ║");
-        System.out.println(c.Blue + "║" + c.Reset+ "                              Your Gold: " + c.Bold + c.Yellow + String.format("%-6d", hero.getGold()) + c.Reset +"                               " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset+ "                                                                              " + c.Blue + "║");
-        System.out.println(c.Blue + "╠══════════════════════════════════════════════════════════════════════════════╣" + c.Reset);
-        System.out.println(c.Blue + "║" + c.Bold + "  Select a category:                                                          " + c.Blue + "║" + c.Reset);
-        System.out.println(c.Blue + "║" + c.Reset + "                                                                              " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "1." + c.Reset + "  " + c.LightPink + " Weapons" + c.Reset + "                                                            " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "2." + c.Reset + "  " + c.Orange + " Armor" + c.Reset + "                                                              " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "3." + c.Reset + "  " + c.Violet + " Potions" + c.Reset + "                                                            " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "4." + c.Reset + "  " + c.Pink + " Spells" + c.Reset + "                                                             " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "5." + c.Reset + "  View All Items                                                      " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "6." + c.Reset + "  Sell Items                                                          " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset + "      " + c.Bold + "0." + c.Reset + "  Exit Market                                                         " + c.Blue + "║");
-        System.out.println(c.Blue + "╚══════════════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
+        System.out.println(c.Blue + "+------------------------------------------------------------------------------+");
+        System.out.println(c.Blue + "|" + c.Bold + "                                MARKET MENU                                   |");
+        System.out.println(c.Blue + "|" + c.Reset+ "                              Your Gold: " + c.Bold + c.Yellow + String.format("%-6d", hero.getGold()) + c.Reset +"                               " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset+ "                                                                              " + c.Blue + "|");
+        System.out.println(c.Blue + "+------------------------------------------------------------------------------+" + c.Reset);
+        System.out.println(c.Blue + "|" + c.Bold + "  Select a category:                                                          " + c.Blue + "|" + c.Reset);
+        System.out.println(c.Blue + "|" + c.Reset + "                                                                              " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "1." + c.Reset + "  " + c.LightPink + " Weapons" + c.Reset + "                                                            " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "2." + c.Reset + "  " + c.Orange + " Armor" + c.Reset + "                                                              " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "3." + c.Reset + "  " + c.Violet + " Potions" + c.Reset + "                                                            " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "4." + c.Reset + "  " + c.Pink + " Spells" + c.Reset + "                                                             " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "5." + c.Reset + "  View All Items                                                      " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "6." + c.Reset + "  Sell Items                                                          " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset + "      " + c.Bold + "0." + c.Reset + "  Exit Market                                                         " + c.Blue + "|");
+        System.out.println(c.Blue + "+------------------------------------------------------------------------------+" + c.Reset + "\n");
     }
     
     public static void showCategoryItems(List<Item> items, String categoryName, Hero hero) {
         System.out.println();
-        System.out.println(c.Blue + "╔══════════════════════════════════════════════════════════════════════╗");
-        System.out.println(c.Blue + "║" + c.Bold + "                               " + categoryName + "                                " + c.Blue + "║");
-        System.out.println(c.Blue + "║" + c.Reset+ "                          Your Gold: " + c.Bold + c.Yellow + String.format("%-6d", hero.getGold()) + c.Reset +"                           " + c.Blue + "║");
-        System.out.println(c.Blue + "╠══════════════════════════════════════════════════════════════════════╣" + c.Reset);
+        System.out.println(c.Blue + "+--------------------------------------------------------------------+");
+        System.out.println(c.Blue + "|" + c.Bold + "                               " + categoryName + "                                " + c.Blue + "|");
+        System.out.println(c.Blue + "|" + c.Reset+ "                          Your Gold: " + c.Bold + c.Yellow + String.format("%-6d", hero.getGold()) + c.Reset +"                           " + c.Blue + "|");
+        System.out.println(c.Blue + "+--------------------------------------------------------------------+" + c.Reset);
         
         if (items.isEmpty()) {
-            System.out.println(c.Blue + "║" + c.Reset + "                    No " + categoryName.toLowerCase() + " available                     " + c.Blue + "║");
+            System.out.println(c.Blue + "|" + c.Reset + "                    No " + categoryName.toLowerCase() + " available                     " + c.Blue + "|");
         }
         else {
-            System.out.println(c.Blue + "║" + c.Bold + String.format(" %-4s %-29s %-14s %-8s %-9s ", "#", "Item Name", "Type", "Lvl", "Price") + c.Blue + "║" + c.Reset);
-            System.out.println(c.Blue + "╠══════════════════════════════════════════════════════════════════════╣" + c.Reset);
+            System.out.println(c.Blue + "|" + c.Bold + String.format(" %-4s %-29s %-14s %-8s %-9s ", "#", "Item Name", "Type", "Lvl", "Price") + c.Blue + "|" + c.Reset);
+            System.out.println(c.Blue + "+--------------------------------------------------------------------+" + c.Reset);
             
             for (int i = 0; i < items.size(); i++) {
                 Item item = items.get(i);
@@ -77,11 +77,11 @@ public class MarketDisplay {
                     priceColor = c.Red;
                 }
                 
-                System.out.println(c.Blue + "║" + c.Reset + String.format(" %-4d ", (i + 1)) + colorCode + String.format("%-30s ", itemName) + colorCode + String.format("%-14s ", itemType) + c.Reset + String.format("%-8d ", item.getRequiredLevel()) + priceColor + String.format("%-9d", item.getPrice()) + c.Blue + "║" + c.Reset);
+                System.out.println(c.Blue + "|" + c.Reset + String.format(" %-4d ", (i + 1)) + colorCode + String.format("%-30s ", itemName) + colorCode + String.format("%-14s ", itemType) + c.Reset + String.format("%-8d ", item.getRequiredLevel()) + priceColor + String.format("%-9d", item.getPrice()) + c.Blue + "|" + c.Reset);
             }
         }
         
-        System.out.println(c.Blue + "╚══════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
+        System.out.println(c.Blue + "+--------------------------------------------------------------------+" + c.Reset + "\n");
     }
     
     public static void showAllItems(List<Item> items, Hero hero) {
@@ -90,28 +90,28 @@ public class MarketDisplay {
     
     public static int showHeroSelection(List<Hero> party) {
         System.out.println();
-        System.out.println(c.Green + "╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println(c.Green + "║" + c.Bold + "                       SELECT HERO FOR ITEM                            " + c.Green + "║");
-        System.out.println(c.Green + "╠═══════════════════════════════════════════════════════════════════════╣" + c.Reset);
+        System.out.println(c.Green + "+-----------------------------------------------------------------------+");
+        System.out.println(c.Green + "|" + c.Bold + "                       SELECT HERO FOR ITEM                            " + c.Green + "|");
+        System.out.println(c.Green + "+-----------------------------------------------------------------------+");
         
         for (int i = 0; i < party.size(); i++) {
             Hero hero = party.get(i);
-            System.out.println(c.Green + "║" + c.Reset + String.format("     %-3d %-30s Gold: %-8d Level: %-3d      ", (i + 1), hero.getName(), hero.getGold(), hero.getLevel()) + c.Green + "║" + c.Reset);
+            System.out.println(c.Green + "|" + c.Reset + String.format("     %-3d %-30s Gold: %-8d Level: %-3d      ", (i + 1), hero.getName(), hero.getGold(), hero.getLevel()) + c.Green + "|" + c.Reset);
         }
         
-        System.out.println(c.Green + "║" + c.Reset + "  " + c.Bold + "   0." + c.Reset + "  Cancel                                                        " + c.Green + "║");
-        System.out.println(c.Green + "╚═══════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
+        System.out.println(c.Green + "|" + c.Reset + "  " + c.Bold + "   0." + c.Reset + "  Cancel                                                        " + c.Green + "|");
+        System.out.println(c.Green + "+-----------------------------------------------------------------------+" + c.Reset + "\n");
         
         return Input.getHeroSelection(party.size());
     }
     
     public static void marketWelcome() {
         System.out.println();
-        System.out.println(c.Blue + "╔═════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println(         "║                                                                             ║");
-        System.out.println("║" + c.Reset + "                          Welcome to the Market!                             " + c.Blue + "║");
-        System.out.println("║                                                                             ║");
-        System.out.println("╚═════════════════════════════════════════════════════════════════════════════╝" + c.Reset);
+        System.out.println(c.Blue + "+-----------------------------------------------------------------------------+");
+        System.out.println(         "|                                                                             |");
+        System.out.println("|" + c.Reset + "                          Welcome to the Market!                             " + c.Blue + "|");
+        System.out.println("|                                                                             |");
+        System.out.println("+-----------------------------------------------------------------------------+" + c.Reset);
         System.out.println();
     }
     
@@ -134,16 +134,16 @@ public class MarketDisplay {
     
     public static void showHeroInventoryForSell(Hero hero) {
         Color c = new Color();
-        System.out.println(c.Green + "\n╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║" + c.Bold + "              " + hero.getName() + "'s INVENTORY (Selling)                  " + c.Green + "║");
-        System.out.println("╠═══════════════════════════════════════════════════════════════════════╣" + c.Reset);
+        System.out.println(c.Green + "\n+-----------------------------------------------------------------------+");
+        System.out.println("|" + c.Bold + "              " + hero.getName() + "'s INVENTORY (Selling)                  " + c.Green + "|");
+        System.out.println("+-----------------------------------------------------------------------+");
         
         List<Item> inventory = hero.getInventory();
         if (inventory.isEmpty()) {
-            System.out.println(c.Green + "║" + c.Reset + "                      Inventory is empty                       " + c.Green + "║");
+            System.out.println(c.Green + "|" + c.Reset + "                      Inventory is empty                       " + c.Green + "|");
         } else {
-            System.out.println(c.Green + "║" + c.Bold + String.format(" %-4s %-35s %-15s %-10s ", "#", "Item Name", "Type", "Sell Price") + c.Green + "║" + c.Reset);
-            System.out.println(c.Green + "╠═══════════════════════════════════════════════════════════════════════╣" + c.Reset);
+            System.out.println(c.Green + "|" + c.Bold + String.format(" %-4s %-35s %-15s %-10s ", "#", "Item Name", "Type", "Sell Price") + c.Green + "|" + c.Reset);
+            System.out.println(c.Green + "+-----------------------------------------------------------------------+");
             
             for (int i = 0; i < inventory.size(); i++) {
                 Item item = inventory.get(i);
@@ -171,12 +171,12 @@ public class MarketDisplay {
                 
                 int sellPrice = item.getPrice() / MonstersAndHeroesGameConstants.SELL_PRICE_DIVISOR;
                 
-                System.out.println(c.Green + "║" + c.Reset + colorCode + String.format(" %-4d %-35s %-15s %-10d", 
-                    (i + 1), itemName, itemType, sellPrice) + c.Green + "║" + c.Reset);
+                System.out.println(c.Green + "|" + c.Reset + colorCode + String.format(" %-4d %-35s %-15s %-10d", 
+                    (i + 1), itemName, itemType, sellPrice) + c.Green + "|" + c.Reset);
             }
         }
         
-        System.out.println(c.Green + "╚═══════════════════════════════════════════════════════════════════════╝" + c.Reset + "\n");
+        System.out.println(c.Green + "+-----------------------------------------------------------------------+" + c.Reset + "\n");
     }
     
     public static void sellSuccess(Hero hero, Item item) {
@@ -186,4 +186,3 @@ public class MarketDisplay {
         System.out.println();
     }
 }
-

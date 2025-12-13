@@ -10,6 +10,7 @@
 import Player.Character;
 import Items.*;
 import Utilities.MonstersAndHeroesGameConstants;
+import Utilities.Percentages;
 
 import java.util.*;
 
@@ -313,4 +314,66 @@ public class Hero extends Character{
             }
         }
     }
+
+    // Compute attackDamage for a given hero, matching Battle's usage pattern
+    public static int attackDamage(Hero hero) {
+        int weaponDamage = 0;
+        Weapon w = hero.getEquippedWeapon();
+        if (w != null) {
+            weaponDamage = w.getDamage();
+        }
+        // Base damage calculation used elsewhere: (strength + weaponDamage) * attackDebuff * Percentages.DAMAGE
+        double base = (hero.getStrength() + weaponDamage) * hero.getAttackDebuff() * Percentages.DAMAGE;
+        int baseDamage = (int) base;
+        return baseDamage;
+    }
+
+
+    // Compute spell damage for a hero and the chosen spell
+    public static int spellDamage(Hero hero, Spell spell) {
+        // encouraged in Battle: spellDamageMultiplier = 1 + (dexterity / 10000)
+        double spellDamageMultiplier = 1.0 + ((double)hero.getDexterity() / 10000.0);
+        int spellDamage = (int)(spell.getDamage() * spellDamageMultiplier);
+        return spellDamage;
+    }
+
+    
+    // Terrain buff / removal helpers
+    // Terrain buffs use a Decorator-style composition approach.
+    public static void applyTerrainBuff(Hero hero, String terrainType) {
+        // In the project the tiles themselves call applyTerrainBonus(hero).
+        double mult = Utilities.ValorBoardConstants.TERRAIN_BONUS_MULTIPLIER;
+        switch(terrainType.toLowerCase()) {
+            case "bush":
+                hero.setDexterity((int)(hero.getDexterity() * mult));
+                break;
+            case "cave":
+                hero.setAgility((int)(hero.getAgility() * mult));
+                break;
+            case "koulou":
+                hero.setStrength((int)(hero.getStrength() * mult));
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    public static void removeTerrainBuff(Hero hero, String terrainType) {
+        double mult = Utilities.ValorBoardConstants.TERRAIN_BONUS_MULTIPLIER;
+        switch(terrainType.toLowerCase()) {
+            case "bush":
+                hero.setDexterity((int)(hero.getDexterity() / mult));
+                break;
+            case "cave":
+                hero.setAgility((int)(hero.getAgility() / mult));
+                break;
+            case "koulou":
+                hero.setStrength((int)(hero.getStrength() / mult));
+                break;
+            default:
+                break;
+        }
+    }
 }
+

@@ -140,18 +140,30 @@ public class ValorBoard {
         return monsterMovementStrategy.move(this, monster, 'S');
     }
     
+    // made some changes to apply/remove terrain effects
+    // CHECK FOR CORRECTNESS
     public boolean moveEntityTo(BoardEntity entity, int newRow, int newCol) {
         if (!BoardUtilities.isValidCoordinate(newRow, newCol, ValorBoardConstants.BOARD_SIZE)) {
             return false;
         }
+
+        // moved this to top of the function, because we must know the old tile before apply any terrain logic
+        // old position must be resolved before movement validation sie effects are made
+        int oldRow = entity.getRow();
+        int oldCol = entity.getCol();
         
+        // prevent reapplying effects if entity does not move
+        if (oldRow == newRow && oldCol == newCol) {
+            return false;
+        }
+
         ValorTile targetTile = grid[newRow][newCol];
         if (!targetTile.canEnter()) {
             return false;
         }
         
-        int oldRow = entity.getRow();
-        int oldCol = entity.getCol();
+
+
         ValorTile oldTile = grid[oldRow][oldCol];
         
         boolean success = false;
@@ -160,9 +172,17 @@ public class ValorBoard {
             oldTile.removeHero();
             success = targetTile.placeHero(hero);
             if (!success) {
+                // rollback
                 oldTile.placeHero(hero);
+                oldTile.applyTerrainEffect(hero); // restore buff if move failed
+            }
+            else {
+                entity.setPosition(newRow, newCol);
+                // apply terrain effect after entering new tile
+                targetTile.applyTerrainEffect(hero);
             }
         } 
+        // no terrain effects for monsters!
         else if (entity instanceof MonsterWrapper) {
             Monster monster = ((MonsterWrapper) entity).getMonster();
             oldTile.removeMonster();
@@ -170,14 +190,12 @@ public class ValorBoard {
             if (!success) {
                 oldTile.placeMonster(monster);
             }
+            else {
+                entity.setPosition(newRow, newCol);
+            }
         }
         
-        if (success) {
-            entity.setPosition(newRow, newCol);
-            return true;
-        }
-        
-        return false;
+        return success;
     }
     
     public List<BoardEntity> getEntitiesInRange(int row, int col, boolean isHero) {

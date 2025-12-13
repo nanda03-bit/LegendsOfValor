@@ -12,9 +12,9 @@ public class ValorBoardDisplay {
     
     public static void printBoard(ValorBoard board) {
         System.out.println();
-        System.out.println(c.Cyan + "═══════════════════════════════════════════════════════════" + c.Reset);
+        System.out.println(c.Cyan + "----------------------------------------------------------------" + c.Reset);
         System.out.println(c.Cyan + "                    LEGENDS OF VALOR BOARD                  " + c.Reset);
-        System.out.println(c.Cyan + "═══════════════════════════════════════════════════════════" + c.Reset);
+        System.out.println(c.Cyan + "----------------------------------------------------------------" + c.Reset);
         System.out.println();
         
         String[][] display = new String[board.getSize()][board.getSize()];
@@ -116,4 +116,3 @@ public class ValorBoardDisplay {
         System.out.println();
     }
 }
-

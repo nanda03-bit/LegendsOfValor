@@ -94,5 +94,15 @@ public class ValorTile {
     public char getSymbol() {
         return state.getSymbol();
     }
+
+    // wrapper method
+    public void applyTerrainEffect(Hero hero) {
+        state.applyTerrainBonus(hero);
+    }
+
+    // wrapper method
+    public void removeTerrainEffect(Hero hero) {
+        state.removeTerrainBonus(hero);
+    }
 }
 

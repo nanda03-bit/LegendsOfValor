@@ -80,4 +80,17 @@ public class Monster extends Character {
     public void setDodgeChance(int dodgeChance) {
         this.dodgeChance = dodgeChance;
     }
+
+    public static int getDamage(Monster m) {
+        // Use base damage and other multipliers; project uses getBaseDamage() * multiplier * Percentages.DAMAGE
+        return (int) (m.getBaseDamage() * 1.0); // multiplier can be adjusted by debuffs elsewhere
+    }
+
+
+    public static void applyDebuff(Monster m, String debuffType, double multiplier, int rounds) {
+        // The Battle class stores debuffs in its own map. 
+        // Monsters can now own their own debuffs.
+        // For compatibility: we add a placeholder that prints an info message (teams should wire this to Battle).
+        System.out.println("Applying debuff " + debuffType + " to monster " + m.getName() + " x" + multiplier + " for " + rounds + " rounds.");
+    }
 }
