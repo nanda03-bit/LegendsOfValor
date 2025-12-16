@@ -89,7 +89,7 @@ public class ValorTile {
     }
     
     public boolean hasMonster() {
-        return monster != null;
+        return monster != null && monster.isAlive();
     }
     
     public void removeObstacle() {

@@ -10,6 +10,7 @@ package Display.Valor;
 import Player.Heroes.*;
 import Player.Monsters.*;
 import Items.*;
+import Wrapper.MonsterWrapper;
 import board.valor.*;
 import board.common.BoardEntity;
 import Color.*;
@@ -23,9 +24,12 @@ public class ValorDisplay {
      */
     public static void welcome() {
         System.out.println();
-        System.out.println(c.Cyan + c.Bold + "═══════════════════════════════════════════════════════════════════════════" + c.Reset);
-        System.out.println(c.Cyan + c.Bold + "                          LEGENDS OF VALOR                                  " + c.Reset);
-        System.out.println(c.Cyan + c.Bold + "═══════════════════════════════════════════════════════════════════════════" + c.Reset);
+        System.out.println(c.Blue + "  _                                   _              __   __     _            " + c.Reset);
+        System.out.println(c.Blue + " | |    ___  __ _  ___ _ __   __| |___    ___  / _|  \\ \\   / /_ _| | ___  _ __ " + c.Reset);
+        System.out.println(c.Blue + " | |   / _ \\/ _` |/ _ \\ '_ \\ / _` / __|  / _ \\| |_    \\ \\ / / _` | |/ _ \\| '__|" + c.Reset);
+        System.out.println(c.Blue + " | |__|  __/ (_| |  __/ | | | (_| \\__ \\ | (_) |  _|    \\ V / (_| | | (_) | |   " + c.Reset);
+        System.out.println(c.Blue + " |_____\\___|\\__, |\\___|_| |_|\\__,_|___/  \\___/|_|       \\_/ \\__,_|_|\\___/|_|   " + c.Reset);
+        System.out.println(c.Blue + "            |___/                                                              " + c.Reset);
         System.out.println();
         System.out.println(c.Yellow + "A MOBA-like game where heroes battle monsters in a contest of strategy!" + c.Reset);
         System.out.println(c.Yellow + "Lead your team of 3 heroes through the lanes to destroy the monsters' Nexus!" + c.Reset);
@@ -206,7 +210,7 @@ public class ValorDisplay {
         System.out.println(c.Yellow + "Select a target to attack:" + c.Reset);
         for (int i = 0; i < monsters.size(); i++) {
             Monster m = monsters.get(i);
-            System.out.println("  " + (i + 1) + ". " + c.Red + m.getName() + c.Reset + 
+            System.out.println("  " + (i + 1) + ". " + c.Red + m.getName() + c.Reset +
                 " (HP: " + m.getHp() + "/" + m.getMaxHp() + ", Lv." + m.getLevel() + ")");
         }
     }
@@ -255,7 +259,7 @@ public class ValorDisplay {
             }
             System.out.println("  " + (i + 1) + ". " + c.Yellow + item.getName() + c.Reset + " - " + info);
         }
-        
+
         // Show currently equipped items
         System.out.println();
         System.out.println("  Currently equipped:");
@@ -310,7 +314,7 @@ public class ValorDisplay {
     public static void showSpellCast(Hero hero, Monster monster, Spell spell, int damage) {
         System.out.println(c.Cyan + hero.getName() + c.Reset + " cast " + c.Magenta + spell.getName() + c.Reset +
             " on " + c.Red + monster.getName() + c.Reset + " for " + c.Yellow + damage + c.Reset + " damage!");
-        
+
         String debuffType = "";
         switch (spell.getType()) {
             case "Fire":
@@ -353,7 +357,7 @@ public class ValorDisplay {
             case 'D': dirName = "east"; break;
             default: dirName = "unknown"; break;
         }
-        
+
         if (success) {
             System.out.println(c.Green + hero.getName() + c.Reset + " moved " + dirName + ".");
         } else {
@@ -455,13 +459,13 @@ public class ValorDisplay {
         System.out.println(c.Bold + "═══════════════════════════════════════════════════════════════════════════" + c.Reset);
         System.out.println(c.Bold + "                           GAME STATUS                                     " + c.Reset);
         System.out.println(c.Bold + "═══════════════════════════════════════════════════════════════════════════" + c.Reset);
-        
+
         System.out.println();
         System.out.println(c.Green + c.Bold + "───── HEROES ─────" + c.Reset);
         for (int i = 0; i < heroes.size(); i++) {
             showHeroInfo(heroes.get(i), i + 1);
         }
-        
+
         System.out.println();
         System.out.println(c.Red + c.Bold + "───── MONSTERS ─────" + c.Reset);
         int monsterCount = 0;
@@ -470,8 +474,8 @@ public class ValorDisplay {
                 MonsterWrapper mw = (MonsterWrapper) entity;
                 Monster m = mw.getMonster();
                 monsterCount++;
-                System.out.println("  " + mw.getEntityId() + ": " + m.getName() + 
-                    " (Lv." + m.getLevel() + ", HP: " + m.getHp() + "/" + m.getMaxHp() + 
+                System.out.println("  " + mw.getEntityId() + ": " + m.getName() +
+                    " (Lv." + m.getLevel() + ", HP: " + m.getHp() + "/" + m.getMaxHp() +
                     ", Row: " + mw.getRow() + ", Col: " + mw.getCol() + ")");
             }
         }

@@ -271,6 +271,18 @@ public class ValorBoard {
         return getEntitiesInRange(entity.getRow(), entity.getCol(), isHero);
     }
 
+    /**
+     * Teleports a hero to an adjacent space of another hero in a different lane.
+     * Rules from PDF:
+     * 1. Teleport works only between different lanes
+     * 2. Cannot teleport to a space ahead of the target hero (lower row number)
+     * 3. Cannot teleport onto a space already occupied by another hero
+     * 4. Cannot teleport behind a monster in the lane
+     *
+     * @param hero       The hero teleporting.
+     * @param targetHero The hero to teleport to.
+     * @return true if teleport was successful.
+     */
     public boolean teleport(Hero hero, Hero targetHero) {
         HeroWrapper wrapper = heroMap.get(hero);
         HeroWrapper targetWrapper = heroMap.get(targetHero);
@@ -282,6 +294,7 @@ public class ValorBoard {
         int heroLane = ValorBoardUtilities.getLaneForColumn(wrapper.getCol());
         int targetLane = ValorBoardUtilities.getLaneForColumn(targetWrapper.getCol());
 
+        // Must be different lanes
         if (heroLane == targetLane || heroLane == ValorBoardConstants.INVALID_LANE || targetLane == ValorBoardConstants.INVALID_LANE) {
             return false;
         }
@@ -298,15 +311,24 @@ public class ValorBoard {
             if (BoardUtilities.isValidCoordinate(newRow, newCol, ValorBoardConstants.BOARD_SIZE)) {
                 ValorTile tile = grid[newRow][newCol];
 
+                // Cannot teleport onto a space occupied by another hero
                 if (tile.hasHero()) {
                     continue;
                 }
 
+                // Cannot teleport onto a monster's tile
                 if (tile.hasMonster()) {
                     continue;
                 }
 
+                // Cannot teleport ahead of the target hero (lower row = north/ahead)
                 if (newRow < targetRow) {
+                    continue;
+                }
+
+                // Cannot teleport behind a monster in the lane
+                // Check if there's any monster NORTH of this position in the same lane
+                if (hasMonsterNorthInLane(newRow, newCol)) {
                     continue;
                 }
 
@@ -324,6 +346,34 @@ public class ValorBoard {
         return false;
     }
 
+    /**
+     * Checks if there is a monster north of the given position in the SAME COLUMN.
+     * Used for teleport validation - cannot teleport behind a monster (in same column).
+     *
+     * @param row The row to check from.
+     * @param col The column to check.
+     * @return true if there's a monster north of this position in the same column.
+     */
+    private boolean hasMonsterNorthInLane(int row, int col) {
+        // Check all rows NORTH of the given position (row - 1 down to 0)
+        // Only check the SAME COLUMN, not the entire lane
+        for (int checkRow = row - 1; checkRow >= 0; checkRow--) {
+            if (BoardUtilities.isValidCoordinate(checkRow, col, ValorBoardConstants.BOARD_SIZE)) {
+                if (grid[checkRow][col].hasMonster()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Recalls a hero to their specific Nexus spawn position.
+     * Works from anywhere on the board, including other lanes.
+     *
+     * @param hero The hero to recall.
+     * @return true if recall was successful.
+     */
     public boolean recall(Hero hero) {
         HeroWrapper wrapper = heroMap.get(hero);
         if (wrapper == null) {
@@ -378,4 +428,3 @@ public class ValorBoard {
         }
     }
 }
-

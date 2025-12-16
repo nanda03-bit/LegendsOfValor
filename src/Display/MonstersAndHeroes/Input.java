@@ -278,17 +278,21 @@ public class Input {
         }
     }
 
+    /**
+     * Gets the market category choice (0-7).
+     * Options: 1-Weapons, 2-Armor, 3-Potions, 4-Spells, 5-All Items, 6-Sell, 7-Hero Info, 0-Exit
+     */
     public static int getMarketCategoryChoice() {
         while (true) {
             try {
-                System.out.print(c.Yellow + "Enter your choice (0-6): " + c.Reset);
+                System.out.print(c.Yellow + "Enter your choice (0-7): " + c.Reset);
                 int choice = getScanner().nextInt();
-                if (choice >= 0 && choice <= 6) {
+                if (choice >= 0 && choice <= 7) {
                     return choice;
                 }
                 else {
                     error.invalidActionInput();
-                    System.out.println("Choice must be between 0 and 6.");
+                    System.out.println("Choice must be between 0 and 7.");
                 }
             }
             catch (InputMismatchException e) {
@@ -321,4 +325,3 @@ public class Input {
         }
     }
 }
-
