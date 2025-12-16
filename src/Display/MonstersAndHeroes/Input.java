@@ -3,18 +3,25 @@ package Display.MonstersAndHeroes;
 import Color.Color;
 import ErrorMessages.PrintErrorMessages;
 import Utilities.MonstersAndHeroesGameConstants;
+import Utilities.ScannerUtil;
 import java.util.*;
 
 public class Input {
-    private static Scanner scanner = new Scanner(System.in);
     private static PrintErrorMessages error = new PrintErrorMessages();
     private static Color c = new Color();
+
+    /**
+     * Gets the scanner instance.
+     */
+    private static Scanner getScanner() {
+        return ScannerUtil.getScanner();
+    }
 
     public static int getPartySize(){
         while (true){
             try{
                 System.out.print(c.Yellow + "Choose the number of warriors who will face the shadows beside you (" + MonstersAndHeroesGameConstants.MIN_PARTY_SIZE + "-" + MonstersAndHeroesGameConstants.MAX_PARTY_SIZE + "):    "+ c.Reset);
-                int size = scanner.nextInt();
+                int size = getScanner().nextInt();
                 if (size >= MonstersAndHeroesGameConstants.MIN_PARTY_SIZE && size <= MonstersAndHeroesGameConstants.MAX_PARTY_SIZE) {
                     return size;
                 }
@@ -25,7 +32,7 @@ public class Input {
             }
             catch (InputMismatchException e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -34,7 +41,7 @@ public class Input {
         while (true) {
             try {
                 System.out.print(c.Yellow + "Enter hero type (" + MonstersAndHeroesGameConstants.MIN_HERO_TYPE + "-" + MonstersAndHeroesGameConstants.MAX_HERO_TYPE + "): " + c.Reset);
-                int type = scanner.nextInt();
+                int type = getScanner().nextInt();
                 if (type >= MonstersAndHeroesGameConstants.MIN_HERO_TYPE && type <= MonstersAndHeroesGameConstants.MAX_HERO_TYPE) {
                     return type;
                 }
@@ -45,7 +52,7 @@ public class Input {
             }
             catch (InputMismatchException e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -54,7 +61,7 @@ public class Input {
         while (true) {
             try {
                 System.out.print(c.Yellow + "Enter your choice (1-" + max + "): "+ c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice >= 1 && choice <= max) {
                     return choice - 1;
                 }
@@ -65,7 +72,7 @@ public class Input {
             }
             catch (InputMismatchException e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -77,7 +84,7 @@ public class Input {
                 System.out.println(c.Yellow + "   [W] Up   |   [A] Left   |   [S] Down   |   [D] Right   |   [M] Market   |   [I] Inventory   |   [Q] Quit" + c.Reset);
                 System.out.println();
                 System.out.print(c.Bold + "Enter action: " + c.Reset);
-                String input = scanner.next().toLowerCase();
+                String input = getScanner().next().toLowerCase();
                 if (input.length() > 0) {
                     char action = input.charAt(0);
                     if (action == 'w' || action == 'a' || action == 's' || action == 'd' || action == 'm' || action == 'i' || action == 'q') {
@@ -88,7 +95,7 @@ public class Input {
             }
             catch (Exception e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -99,7 +106,7 @@ public class Input {
                 System.out.println(c.Yellow + c.Bold + "Choose your next move:" + c.Reset);
                 System.out.println(c.Yellow + "      [A] Attack an enemy      |      [S] Cast Spell      |      [P] Use Potion      |      [E] Equip Item      |      [I] View Info      |      [U] Surrender      " + c.Reset);
                 System.out.print( c.Bold+ "Your action: " + c.Reset);
-                String input = scanner.next().toUpperCase();
+                String input = getScanner().next().toUpperCase();
                 if (input.length() > 0){
                     char action = input.charAt(0);
                     if (action == 'A' || action == 'S' || action == 'P' || action == 'E' || action == 'I' || action == 'U') {
@@ -110,7 +117,7 @@ public class Input {
             }
             catch (Exception e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -123,7 +130,7 @@ public class Input {
                 System.out.println("   S  - Sell Items    (Sell items from your inventory for gold)");
                 System.out.println("   L  - Leave Market  (Return to your adventure)");
                 System.out.print("Your action: ");
-                String input = scanner.next().toUpperCase();
+                String input = getScanner().next().toUpperCase();
                 if (input.length() > 0) {
                     char action = input.charAt(0);
                     if (action == 'B' || action == 'S' || action == 'L') {
@@ -134,7 +141,7 @@ public class Input {
             }
             catch (Exception e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -143,7 +150,7 @@ public class Input {
         while (true){
             try{
                 System.out.print("Enter your choice (1-" + max + ", or 0 to go back): ");
-                String input = scanner.next();
+                String input = getScanner().next();
                 int choice = Integer.parseInt(input);
                 if (choice == 0) {
                     return -1;
@@ -158,7 +165,7 @@ public class Input {
             }
             catch (NumberFormatException e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -167,7 +174,7 @@ public class Input {
         while (true) {
             try {
                 System.out.print("Your Realm size can be between (" + MonstersAndHeroesGameConstants.MIN_WORLD_SIZE + "-" + MonstersAndHeroesGameConstants.MAX_WORLD_SIZE + "): ");
-                int size = scanner.nextInt();
+                int size = getScanner().nextInt();
                 System.out.println();
                 if (size >= MonstersAndHeroesGameConstants.MIN_WORLD_SIZE && size <= MonstersAndHeroesGameConstants.MAX_WORLD_SIZE) {
                     return size;
@@ -179,7 +186,7 @@ public class Input {
             }
             catch (InputMismatchException e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -188,7 +195,7 @@ public class Input {
         while (true) {
             try{
                 System.out.print(c.Yellow + "Select target (1-" + max + "): " + c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice >= 1 && choice <= max) {
                     return choice - 1;
                 }
@@ -199,7 +206,7 @@ public class Input {
             }
             catch (InputMismatchException e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -208,7 +215,7 @@ public class Input {
         while (true){
             try{
                 System.out.print(c.Yellow + "Select spell (1-" + max + "): " + c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice >= 1 && choice <= max) {
                     return choice - 1;
                 }
@@ -219,7 +226,7 @@ public class Input {
             }
             catch (InputMismatchException e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -228,7 +235,7 @@ public class Input {
         while (true) {
             try {
                 System.out.print(c.Yellow + "Select potion (1-" + max + "): " + c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice >= 1 && choice <= max) {
                     return choice - 1;
                 }
@@ -239,7 +246,7 @@ public class Input {
             }
             catch (InputMismatchException e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -248,7 +255,7 @@ public class Input {
         while (true){
             try{
                 System.out.print(c.Yellow + "Choose the item you want to equip from your inventory (enter a number between 1 and " + max + "): " + c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice >= 1 && choice <= max){
                     return choice - 1;
                 }
@@ -259,7 +266,7 @@ public class Input {
             }
             catch (InputMismatchException e){
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -268,7 +275,7 @@ public class Input {
         while (true) {
             try {
                 System.out.print(c.Yellow + "Enter your choice (0-6): " + c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice >= 0 && choice <= 6) {
                     return choice;
                 }
@@ -279,7 +286,7 @@ public class Input {
             }
             catch (InputMismatchException e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }
@@ -288,7 +295,7 @@ public class Input {
         while (true) {
             try {
                 System.out.print(c.Yellow + "Select hero (1-" + partySize + ", 0 to cancel): " + c.Reset);
-                int choice = scanner.nextInt();
+                int choice = getScanner().nextInt();
                 if (choice == 0) {
                     return -1;
                 }
@@ -302,7 +309,7 @@ public class Input {
             }
             catch (InputMismatchException e) {
                 error.invalidInput();
-                scanner.nextLine();
+                getScanner().nextLine();
             }
         }
     }

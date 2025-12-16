@@ -18,6 +18,7 @@ public class Color {
     public String Cyan = "\u001B[36m";
     public String Blue = "\u001B[34m";
     public String Purple = "\u001B[35m";
+    public String Magenta = "\u001B[35m";
     public String Bg_White = "\u001B[47m";
     public String Orange = "\u001B[38;5;208m";
     public String Bold = "\u001B[1m";
