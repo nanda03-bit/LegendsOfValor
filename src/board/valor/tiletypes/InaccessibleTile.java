@@ -1,3 +1,10 @@
+/**
+ * Filename: InaccessibleTile.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Tile type representing walls that cannot be entered or removed.
+ */
+
 package board.valor.tiletypes;
 
 import board.valor.ValorTileType;

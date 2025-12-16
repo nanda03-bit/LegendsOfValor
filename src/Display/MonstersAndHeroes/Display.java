@@ -1,3 +1,10 @@
+/**
+ * Filename: Display.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov-05
+ * Description: Handles all display output for the Monsters and Heroes game.
+ */
+
 package Display.MonstersAndHeroes;
 
 import Player.Heroes.*;

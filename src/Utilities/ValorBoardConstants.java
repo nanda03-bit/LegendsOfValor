@@ -1,3 +1,10 @@
+/**
+ * Filename: ValorBoardConstants.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Constants for Legends of Valor board configuration and layout.
+ */
+
 package Utilities;
 
 public class ValorBoardConstants {

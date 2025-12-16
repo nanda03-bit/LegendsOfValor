@@ -1,3 +1,10 @@
+/**
+ * Filename: EntityCollection.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Collection class for board entities that implements Iterable for easy traversal.
+ */
+
 package board.valor;
 
 import board.common.BoardEntity;

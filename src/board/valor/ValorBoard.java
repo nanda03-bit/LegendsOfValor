@@ -1,9 +1,20 @@
+/**
+ * Filename: ValorBoard.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Manages the game board for Legends of Valor, including tile placement, entity management, and movement.
+ */
+
 package board.valor;
 
 import board.valor.tiletypes.*;
 import board.common.BoardUtilities;
 import board.common.BoardEntity;
-import board.common.MovementStrategy;
+import Strategy.MovementStrategy;
+import Strategy.HeroMovementStrategy;
+import Strategy.MonsterMovementStrategy;
+import Wrapper.HeroWrapper;
+import Wrapper.MonsterWrapper;
 import Utilities.ValorBoardConstants;
 import Player.Heroes.Hero;
 import Player.Monsters.Monster;

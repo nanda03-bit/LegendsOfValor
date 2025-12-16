@@ -1,3 +1,10 @@
+/**
+ * Filename: PlainTile.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Basic passable tile type with no special effects.
+ */
+
 package board.valor.tiletypes;
 
 import board.valor.ValorTileType;

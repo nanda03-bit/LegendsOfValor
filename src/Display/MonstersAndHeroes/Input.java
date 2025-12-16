@@ -1,3 +1,10 @@
+/**
+ * Filename: Input.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov-05
+ * Description: Handles all user input for the Monsters and Heroes game.
+ */
+
 package Display.MonstersAndHeroes;
 
 import Color.Color;

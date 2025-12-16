@@ -1,3 +1,10 @@
+/**
+ * Filename: ObstacleTile.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Tile type representing obstacles that block movement but can be removed.
+ */
+
 package board.valor.tiletypes;
 
 import board.valor.ValorTileType;

@@ -1,5 +1,8 @@
 /**
- * Handles all combat mechanics, hero actions, and monster AI for Legends of Valor.
+ * Filename: ValorBattle.java
+ * Author: Gowrav
+ * Date: 2025-Dec
+ * Description: Handles all combat mechanics, hero actions, and monster AI for Legends of Valor.
  * Implements the battle system interface for the Valor game mode.
  */
 
@@ -9,6 +12,8 @@ import Player.Heroes.*;
 import Player.Monsters.*;
 import board.valor.*;
 import board.common.BoardEntity;
+import Wrapper.HeroWrapper;
+import Wrapper.MonsterWrapper;
 import Items.*;
 import Display.Valor.*;
 import Utilities.*;
@@ -171,18 +176,30 @@ public class ValorBattle {
                         break;
                     case 'M': // Move
                         actionTaken = handleMove(hero);
+                        if (actionTaken) {
+                            board.printBoard();
+                        }
                         break;
                     case 'T': // Teleport
                         actionTaken = handleTeleport(hero, i);
+                        if (actionTaken) {
+                            board.printBoard();
+                        }
                         break;
                     case 'R': // Recall
                         actionTaken = handleRecall(hero);
+                        if (actionTaken) {
+                            board.printBoard();
+                        }
                         break;
                     case 'B': // Market (Buy/Sell)
                         handleMarket(hero); // Market doesn't consume action
                         break;
                     case 'O': // Remove Obstacle
                         actionTaken = handleRemoveObstacle(hero);
+                        if (actionTaken) {
+                            board.printBoard();
+                        }
                         break;
                     case 'I': // Info
                         ValorDisplay.showAllInfo(heroes, board.getMonsters());
@@ -239,6 +256,7 @@ public class ValorBattle {
                 
                 if (moved) {
                     ValorDisplay.monsterMoved(monster, oldRow, mw.getRow());
+                    board.printBoard();
                     
                     // Check for defeat (monster reached heroes' nexus)
                     if (mw.getRow() >= ValorGameConstants.HEROES_NEXUS_ROW) {

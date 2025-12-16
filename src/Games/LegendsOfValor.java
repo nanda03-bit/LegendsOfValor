@@ -1,3 +1,11 @@
+/**
+ * Filename: LegendsOfValor.java
+ * Author: Gowrav
+ * Date: 2025-Dec
+ * Description: Main game class for Legends of Valor. Manages game initialization,
+ * hero selection, lane assignment, and the main game loop.
+ */
+
 package Games;
 
 import java.util.*;

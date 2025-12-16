@@ -1,3 +1,10 @@
+/**
+ * Filename: ValorTile.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Represents a single tile on the Valor board, managing terrain type and entity placement.
+ */
+
 package board.valor;
 
 import board.valor.tiletypes.*;

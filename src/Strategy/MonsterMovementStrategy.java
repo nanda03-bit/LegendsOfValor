@@ -1,9 +1,18 @@
-package board.valor;
+/**
+ * Filename: MonsterMovementStrategy.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Strategy implementation for monster movement on the board.
+ */
 
+package Strategy;
+
+import board.valor.ValorBoard;
+import Wrapper.MonsterWrapper;
 import Utilities.ValorBoardConstants;
-import board.common.MovementStrategy;
 import board.common.BoardEntity;
 import board.common.BoardUtilities;
+import board.valor.ValorBoardUtilities;
 
 public class MonsterMovementStrategy implements MovementStrategy {
 
@@ -56,4 +65,3 @@ public class MonsterMovementStrategy implements MovementStrategy {
         return true;
     }
 }
-

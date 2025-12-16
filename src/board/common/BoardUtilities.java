@@ -1,3 +1,10 @@
+/**
+ * Filename: BoardUtilities.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov
+ * Description: Utility methods for board coordinate validation and adjacency checks.
+ */
+
 package board.common;
 
 public class BoardUtilities {

@@ -1,3 +1,10 @@
+/**
+ * Filename: BuffManager.java
+ * Author: Olivia Ma
+ * Date: 2025-Dec
+ * Description: Composition-based decorator for temporary buffs and debuffs.
+ */
+
 package Buffs;
 
 

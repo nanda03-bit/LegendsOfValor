@@ -1,3 +1,10 @@
+/**
+ * Filename: BoardIterator.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov
+ * Description: Iterator implementation that filters out dead entities when traversing board entities.
+ */
+
 package board.common;
 
 import java.util.Iterator;

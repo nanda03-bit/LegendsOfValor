@@ -1,3 +1,10 @@
+/**
+ * Filename: HeroFactory.java
+ * Author: Olivia Ma
+ * Date: 2025-Dec
+ * Description: Factory class for creating hero instances based on type.
+ */
+
 package Factories;
 
 import Player.Heroes.*;

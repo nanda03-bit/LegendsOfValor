@@ -1,3 +1,10 @@
+/**
+ * Filename: BushTile.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Tile type that provides dexterity bonus to heroes.
+ */
+
 package board.valor.tiletypes;
 
 import board.valor.ValorTileType;

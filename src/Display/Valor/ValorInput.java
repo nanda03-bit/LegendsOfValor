@@ -1,5 +1,8 @@
 /**
- * Handles all user input for the Legends of Valor game.
+ * Filename: ValorInput.java
+ * Author: Gowrav
+ * Date: 2025-Dec
+ * Description: Handles all user input for the Legends of Valor game.
  */
 
 package Display.Valor;

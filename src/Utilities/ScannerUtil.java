@@ -1,5 +1,8 @@
 /**
- * Provides a single shared Scanner instance for the entire application
+ * Filename: ScannerUtil.java
+ * Author: Gowrav
+ * Date: 2025-Dec
+ * Description: Provides a single shared Scanner instance for the entire application
  * to avoid input buffering issues with multiple Scanner objects.
  */
 

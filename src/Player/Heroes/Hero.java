@@ -444,4 +444,14 @@ public class Hero extends Character {
                 break;
         }
     }
+
+    /**
+     * Calculates the attack damage this hero can deal.
+     * This abstraction allows heroes and monsters to attack in the same way.
+     * @return The base attack damage value.
+     */
+    @Override
+    public int calculateAttackDamage() {
+        return attackDamage(this);
+    }
 }
