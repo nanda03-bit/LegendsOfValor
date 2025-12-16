@@ -51,5 +51,12 @@ public interface ICharacter {
      * Levels up the character.
      */
     void levelUp();
+
+    /**
+     * Calculates the attack damage this character can deal.
+     * This abstraction allows heroes and monsters to attack in the same way.
+     * @return The base attack damage value.
+     */
+    int calculateAttackDamage();
 }
 

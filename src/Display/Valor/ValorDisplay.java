@@ -1,4 +1,7 @@
 /**
+ * Filename: ValorDisplay.java
+ * Author: Gowrav
+ * Date: 2025-Dec
  * Description: Handles all display output for the Legends of Valor game.
  */
 

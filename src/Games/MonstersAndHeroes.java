@@ -19,15 +19,14 @@ import board.monstersandheroes.Board;
 import Display.MonstersAndHeroes.*;
 import Display.Statistics.StatisticsDisplay;
 
-public class MonstersAndHeroes {
+public class MonstersAndHeroes extends BaseGame {
     private Board world;
-    private List<Hero> party;
     private Market market;
-    private static PrintErrorMessages error = new PrintErrorMessages();
 
     /**
      * Starts the game.
      */
+    @Override
     public void start() {
         Display.welcome();
         DisplayInstruction.welcomeInstructions();
@@ -39,34 +38,21 @@ public class MonstersAndHeroes {
     /**
      * Initializes the game world, party, and market.
      */
-    private void initialize() {
+    @Override
+    protected void initialize() {
         int worldSize = Input.getWorldSize();
         world = new Board(worldSize);
         DisplayInstruction.heroesInstructions();
-        party = createParty();
-
+        heroes = createHeroes();
     }
 
     /**
-     * Creates the hero party based on player input.
-     * @return The list of heroes in the party.
+     * Gets the number of heroes to create.
+     * @return The number of heroes to create.
      */
-    private List<Hero> createParty() {
-        List<Hero> heroes = new ArrayList<>();
-        int partySize = Input.getPartySize();
-        for (int i = 0; i < partySize; i++) {
-            Display.selectHeroType(i + 1);
-            int heroType = Input.getHeroType();
-            Hero hero = createHero(heroType);
-            if (hero != null) {
-                heroes.add(hero);
-            }
-            else {
-                error.failedCreateHero();
-                i--;
-            }
-        }
-        return heroes;
+    @Override
+    protected int getNumHeroes() {
+        return Input.getPartySize();
     }
 
     /**
@@ -74,58 +60,17 @@ public class MonstersAndHeroes {
      * @param heroType The type of hero to create.
      * @return The created hero, or null if creation failed.
      */
-    private Hero createHero(int heroType) {
-        List<String[]> warriorData = DataLoader.readData("Warriors.txt");
-        List<String[]> sorcererData = DataLoader.readData("Sorcerers.txt");
-        List<String[]> paladinData = DataLoader.readData("Paladins.txt");
-
-        switch (heroType) {
-            case MonstersAndHeroesGameConstants.WARRIOR_TYPE:
-                if (warriorData.isEmpty()) {
-                    error.noWarriorHero();
-                    return null;
-                }
-
-                Display.selectHero(warriorData);
-                int warriorChoice = Input.getHeroChoice(warriorData.size());
-                String[] warrior = warriorData.get(warriorChoice);
-                return new Warrior(warrior[0], Integer.parseInt(warrior[1]), Integer.parseInt(warrior[2]), Integer.parseInt(warrior[3]), Integer.parseInt(warrior[4]), Integer.parseInt(warrior[5]), Integer.parseInt(warrior[6]));
-            case MonstersAndHeroesGameConstants.SORCERER_TYPE:
-                if (sorcererData.isEmpty()) {
-                    error.noSorcererHero();
-                    return null;
-                }
-                Display.selectHero(sorcererData);
-                int sorcererChoice = Input.getHeroChoice(sorcererData.size());
-                String[] sorcerer = sorcererData.get(sorcererChoice);
-                return new Sorcerer(sorcerer[0], Integer.parseInt(sorcerer[1]), Integer.parseInt(sorcerer[2]), Integer.parseInt(sorcerer[3]), Integer.parseInt(sorcerer[4]), Integer.parseInt(sorcerer[5]), Integer.parseInt(sorcerer[6]));
-            case MonstersAndHeroesGameConstants.PALADIN_TYPE:
-                if (paladinData.isEmpty()) {
-                    error.noPaladinHero();
-                    return null;
-                }
-                Display.selectHero(paladinData);
-                int paladinChoice = Input.getHeroChoice(paladinData.size());
-                String[] paladin = paladinData.get(paladinChoice);
-                return new Paladin(paladin[0], Integer.parseInt(paladin[1]), Integer.parseInt(paladin[2]), Integer.parseInt(paladin[3]), Integer.parseInt(paladin[4]), Integer.parseInt(paladin[5]), Integer.parseInt(paladin[6]));
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * The main game loop, which handles player actions and game events.f
-     */
-    private void gameLoop() {
+    @Override
+    protected void gameLoop() {
         while (true) {
-            Display.map(world, party);
+            Display.map(world, heroes);
             char action = Input.getAction();
             switch (action) {
                 case 'w':
-                    world.move(action, party);
+                    world.move(action, heroes);
                     if (world.isCommonSpace()) {
                         if (Math.random() < Percentages.BATTLE) {
-                            Battle battle = new Battle(party);
+                            Battle battle = new Battle(heroes);
                             battle.start();
                             endOfBattle();
                             if (isGameOver()) {
@@ -136,10 +81,10 @@ public class MonstersAndHeroes {
                     }
                     break;
                 case 'a':
-                    world.move(action, party);
+                    world.move(action, heroes);
                     if (world.isCommonSpace()) {
                         if (Math.random() < Percentages.BATTLE) {
-                            Battle battle = new Battle(party);
+                            Battle battle = new Battle(heroes);
                             battle.start();
                             endOfBattle();
                             if (isGameOver()) {
@@ -150,10 +95,10 @@ public class MonstersAndHeroes {
                     }
                     break;
                 case 's':
-                    world.move(action, party);
+                    world.move(action, heroes);
                     if (world.isCommonSpace()) {
                         if (Math.random() < Percentages.BATTLE) {
-                            Battle battle = new Battle(party);
+                            Battle battle = new Battle(heroes);
                             battle.start();
                             endOfBattle();
                             if (isGameOver()) {
@@ -164,10 +109,10 @@ public class MonstersAndHeroes {
                     }
                     break;
                 case 'd':
-                    world.move(action, party);
+                    world.move(action, heroes);
                     if (world.isCommonSpace()) {
                         if (Math.random() < Percentages.BATTLE) {
-                            Battle battle = new Battle(party);
+                            Battle battle = new Battle(heroes);
                             battle.start();
                             endOfBattle();
                             if (isGameOver()) {
@@ -180,14 +125,14 @@ public class MonstersAndHeroes {
                 case 'm':
                     if (world.isMarket()) {
                         market = new Market();
-                        market.enter(party);
+                        market.enter(heroes);
                     }
                     else {
                         error.notInMarket();
                     }
                     break;
                 case 'i':
-                    StatisticsDisplay.displayPartyStats(party);
+                    StatisticsDisplay.displayPartyStats(heroes);
                     break;
                 case 'q':
                     Display.quit();
@@ -199,7 +144,7 @@ public class MonstersAndHeroes {
     }
 
     private void endOfBattle() {
-        for (Hero hero : party) {
+        for (Hero hero : heroes) {
             hero.decrementDebuffDuration();
         }
     }
@@ -208,8 +153,9 @@ public class MonstersAndHeroes {
      * Checks if the game is over (i.e., all heroes are defeated).
      * @return true if the game is over, false otherwise.
      */
-    private boolean isGameOver() {
-        for (Hero hero : party) {
+    @Override
+    protected boolean isGameOver() {
+        for (Hero hero : heroes) {
             if (hero.getHp() > 0) {
                 return false;
             }

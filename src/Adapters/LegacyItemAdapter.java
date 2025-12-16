@@ -1,3 +1,10 @@
+/**
+ * Filename: LegacyItemAdapter.java
+ * Author: Olivia Ma
+ * Date: 2025-Dec
+ * Description: Adapter to convert previous assignment format into current Item objects.
+ */
+
 package Adapters;
 
 import Items.*;

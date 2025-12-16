@@ -1,3 +1,10 @@
+/**
+ * Filename: Monster.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov-08
+ * Description: Base class for all monster types, defining combat attributes and behaviors.
+ */
+
 package Player.Monsters;
 
 import Player.Character;
@@ -92,5 +99,15 @@ public class Monster extends Character {
         // Monsters can now own their own debuffs.
         // For compatibility: we add a placeholder that prints an info message (teams should wire this to Battle).
         System.out.println("Applying debuff " + debuffType + " to monster " + m.getName() + " x" + multiplier + " for " + rounds + " rounds.");
+    }
+
+    /**
+     * Calculates the attack damage this monster can deal.
+     * This abstraction allows heroes and monsters to attack in the same way.
+     * @return The base attack damage value.
+     */
+    @Override
+    public int calculateAttackDamage() {
+        return getDamage(this);
     }
 }

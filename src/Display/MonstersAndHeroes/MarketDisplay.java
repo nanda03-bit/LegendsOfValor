@@ -1,3 +1,10 @@
+/**
+ * Filename: MarketDisplay.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov-10
+ * Description: Handles display of market menus and item listings for the Monsters and Heroes game.
+ */
+
 package Display.MonstersAndHeroes;
 
 import Player.Heroes.Hero;

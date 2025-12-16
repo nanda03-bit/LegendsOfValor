@@ -1,3 +1,10 @@
+/**
+ * Filename: ValorBoardUtilities.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Utility methods for Legends of Valor board operations, including lane calculations and coordinate validation.
+ */
+
 package board.valor;
 
 import Utilities.ValorBoardConstants;

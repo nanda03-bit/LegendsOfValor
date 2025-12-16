@@ -1,4 +1,11 @@
-package board.valor;
+/**
+ * Filename: HeroWrapper.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Wrapper class that adds board position information to Hero objects.
+ */
+
+package Wrapper;
 
 import board.common.BoardEntity;
 import Player.Heroes.Hero;
@@ -50,4 +57,3 @@ public class HeroWrapper implements BoardEntity {
         return heroIndex;
     }
 }
-

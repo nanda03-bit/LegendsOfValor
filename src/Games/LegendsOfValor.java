@@ -1,6 +1,6 @@
 /**
  * Filename: LegendsOfValor.java
- * Author: Person B - Combat, Actions & Game Loop Lead
+ * Author: Gowrav
  * Date: 2025-Dec
  * Description: Main game class for Legends of Valor. Manages game initialization,
  * hero selection, lane assignment, and the main game loop.
@@ -13,7 +13,10 @@ import Battle.ValorBattle;
 import board.valor.*;
 import Display.MonstersAndHeroes.Display;
 import Display.MonstersAndHeroes.Input;
-import Display.Valor.*;
+import Display.Valor.ValorDisplay;
+import Display.Valor.ValorInput;
+import Display.Valor.ValorBoardDisplay;
+
 import Utilities.*;
 import ErrorMessages.PrintErrorMessages;
 import Color.Color;
@@ -26,18 +29,17 @@ import java.util.*;
  * Main game class for Legends of Valor.
  * Manages game initialization, hero selection, lane assignment, and the main game loop.
  */
-public class LegendsOfValor {
+public class LegendsOfValor extends BaseGame {
     private ValorBoard board;
-    private List<Hero> heroes;
     private List<Integer> heroLanes;
     private ValorBattle battleSystem;
     private int difficulty;
-    private PrintErrorMessages error = new PrintErrorMessages();
     private Color c = new Color();
 
     /**
      * Starts the Legends of Valor game.
      */
+    @Override
     public void start() {
         try {
             ValorDisplay.welcome();
@@ -47,7 +49,8 @@ public class LegendsOfValor {
             gameLoop();
 
             endGame();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println(c.Red + "An error occurred: " + e.getMessage() + c.Reset);
             e.printStackTrace();
         }
@@ -56,7 +59,8 @@ public class LegendsOfValor {
     /**
      * Initializes the game world, heroes, lanes, and spawns initial monsters.
      */
-    private void initialize() {
+    @Override
+    protected void initialize() {
         // Create the game board
         board = new ValorBoard();
         heroes = new ArrayList<>();
@@ -66,7 +70,13 @@ public class LegendsOfValor {
         difficulty = ValorInput.getDifficulty();
 
         // Create and assign heroes to lanes
+        System.out.println();
+        System.out.println(c.Cyan + c.Bold + "═══ SELECT YOUR HEROES ═══" + c.Reset);
+        System.out.println(c.Yellow + "You must select 3 heroes for your team." + c.Reset);
+        System.out.println();
         createHeroes();
+        System.out.println();
+        System.out.println(c.Green + "Your team is ready!" + c.Reset);
         assignHeroesToLanes();
 
         // Spawn initial monsters
@@ -82,9 +92,24 @@ public class LegendsOfValor {
     }
 
     /**
-     * Creates the 3 heroes for the game with duplicate prevention.
+     * Gets the number of heroes to create.
+     * @return The number of heroes to create.
      */
-    private void createHeroes() {
+    @Override
+    protected int getNumHeroes() {
+        return ValorGameConstants.NUM_HEROES;
+    }
+
+    /**
+     * Override createHeroes to add color formatting for Legends of Valor.
+     */
+    @Override
+    protected List<Hero> createHeroes() {
+        if (heroes == null) {
+            heroes = new ArrayList<>();
+        }
+        
+        // Print header with color formatting
         System.out.println();
         System.out.println(c.Cyan + c.Bold + "═══ SELECT YOUR HEROES ═══" + c.Reset);
         System.out.println(c.Yellow + "You must select 3 heroes for your team." + c.Reset);
@@ -97,12 +122,12 @@ public class LegendsOfValor {
         // Track selected hero names to prevent duplicates
         Set<String> selectedHeroNames = new HashSet<>();
 
-        for (int i = 0; i < ValorGameConstants.NUM_HEROES; i++) {
+        for (int i = 0; i < getNumHeroes(); i++) {
             System.out.println();
             System.out.println(c.Cyan + "--- Hero " + (i + 1) + " ---" + c.Reset);
             Display.selectHeroType(i + 1);
             int heroType = Input.getHeroType();
-            Hero hero = createHero(heroType, warriorData, sorcererData, paladinData, selectedHeroNames);
+            Hero hero = createHero(heroType, selectedHeroNames);
 
             if (hero != null) {
                 heroes.add(hero);
@@ -116,78 +141,64 @@ public class LegendsOfValor {
 
         System.out.println();
         System.out.println(c.Green + "Your team is ready!" + c.Reset);
+        return heroes;
     }
 
     /**
-     * Creates a hero of a specific type with duplicate checking.
+     * Override createWarrior to add color formatting for Legends of Valor.
+     * Creates a warrior hero with duplicate checking.
      *
-     * @param heroType          The type of hero to create.
      * @param warriorData       List of available warrior data.
-     * @param sorcererData      List of available sorcerer data.
-     * @param paladinData       List of available paladin data.
      * @param selectedHeroNames Set of already selected hero names to prevent duplicates.
-     * @return The created hero, or null if creation failed.
+     * @return The created warrior, or null if creation failed.
      */
-    private Hero createHero(int heroType, List<String[]> warriorData,
-                            List<String[]> sorcererData, List<String[]> paladinData,
-                            Set<String> selectedHeroNames) {
-        switch (heroType) {
-            case MonstersAndHeroesGameConstants.WARRIOR_TYPE:
-                if (warriorData.isEmpty()) {
-                    error.noWarriorHero();
-                    return null;
-                }
+    @Override
+    protected Hero createWarrior(List<String[]> warriorData, Set<String> selectedHeroNames) {
+        if (warriorData.isEmpty()) {
+            error.noWarriorHero();
+            return null;
+        }
 
-                // Filter out already selected heroes
-                List<String[]> availableWarriors = new ArrayList<>();
-                for (String[] warrior : warriorData) {
-                    if (!selectedHeroNames.contains(warrior[0])) {
-                        availableWarriors.add(warrior);
-                    }
-                }
-
-                if (availableWarriors.isEmpty()) {
-                    System.out.println(c.Red + "All warriors have been selected! Choose a different type." + c.Reset);
-                    return null;
-                }
+        List<String[]> availableWarriors = filterAvailableHeroes(warriorData, selectedHeroNames);
+        if (availableWarriors.isEmpty()) {
+            System.out.println(c.Red + "All warriors have been selected! Choose a different type." + c.Reset);
+            return null;
+        }
 
                 Display.selectHero(availableWarriors);
                 int warriorChoice = Input.getHeroChoice(availableWarriors.size());
                 String[] warrior = availableWarriors.get(warriorChoice);
 
-                // Double-check for duplicates (safety check)
-                if (selectedHeroNames.contains(warrior[0])) {
-                    System.out.println(c.Red + warrior[0] + " is already in your team! Choose a different hero." + c.Reset);
-                    return null;
-                }
+        if (selectedHeroNames.contains(warrior[0])) {
+            System.out.println(c.Red + warrior[0] + " is already in your team! Choose a different hero." + c.Reset);
+            return null;
+        }
 
-                return new Warrior(warrior[0], Integer.parseInt(warrior[1]),
-                        Integer.parseInt(warrior[2]), Integer.parseInt(warrior[3]),
-                        Integer.parseInt(warrior[4]), Integer.parseInt(warrior[5]),
-                        Integer.parseInt(warrior[6]));
+        return new Warrior(warrior[0], Integer.parseInt(warrior[1]),
+                Integer.parseInt(warrior[2]), Integer.parseInt(warrior[3]),
+                Integer.parseInt(warrior[4]), Integer.parseInt(warrior[5]),
+                Integer.parseInt(warrior[6]));
+    }
 
-            case MonstersAndHeroesGameConstants.SORCERER_TYPE:
-                if (sorcererData.isEmpty()) {
-                    error.noSorcererHero();
-                    return null;
-                }
+    /**
+     * Override createSorcerer to add color formatting for Legends of Valor.
+     */
+    @Override
+    protected Hero createSorcerer(List<String[]> sorcererData, Set<String> selectedHeroNames) {
+        if (sorcererData.isEmpty()) {
+            error.noSorcererHero();
+            return null;
+        }
 
-                // Filter out already selected heroes
-                List<String[]> availableSorcerers = new ArrayList<>();
-                for (String[] sorcerer : sorcererData) {
-                    if (!selectedHeroNames.contains(sorcerer[0])) {
-                        availableSorcerers.add(sorcerer);
-                    }
-                }
+        List<String[]> availableSorcerers = filterAvailableHeroes(sorcererData, selectedHeroNames);
+        if (availableSorcerers.isEmpty()) {
+            System.out.println(c.Red + "All sorcerers have been selected! Choose a different type." + c.Reset);
+            return null;
+        }
 
-                if (availableSorcerers.isEmpty()) {
-                    System.out.println(c.Red + "All sorcerers have been selected! Choose a different type." + c.Reset);
-                    return null;
-                }
-
-                Display.selectHero(availableSorcerers);
-                int sorcererChoice = Input.getHeroChoice(availableSorcerers.size());
-                String[] sorcerer = availableSorcerers.get(sorcererChoice);
+        Display.selectHero(availableSorcerers);
+        int sorcererChoice = Input.getHeroChoice(availableSorcerers.size());
+        String[] sorcerer = availableSorcerers.get(sorcererChoice);
 
                 // Double-check for duplicates (safety check)
                 if (selectedHeroNames.contains(sorcerer[0])) {
@@ -195,29 +206,27 @@ public class LegendsOfValor {
                     return null;
                 }
 
-                return new Sorcerer(sorcerer[0], Integer.parseInt(sorcerer[1]),
-                        Integer.parseInt(sorcerer[2]), Integer.parseInt(sorcerer[3]),
-                        Integer.parseInt(sorcerer[4]), Integer.parseInt(sorcerer[5]),
-                        Integer.parseInt(sorcerer[6]));
+        return new Sorcerer(sorcerer[0], Integer.parseInt(sorcerer[1]),
+                Integer.parseInt(sorcerer[2]), Integer.parseInt(sorcerer[3]),
+                Integer.parseInt(sorcerer[4]), Integer.parseInt(sorcerer[5]),
+                Integer.parseInt(sorcerer[6]));
+    }
 
-            case MonstersAndHeroesGameConstants.PALADIN_TYPE:
-                if (paladinData.isEmpty()) {
-                    error.noPaladinHero();
-                    return null;
-                }
+    /**
+     * Override createPaladin to add color formatting for Legends of Valor.
+     */
+    @Override
+    protected Hero createPaladin(List<String[]> paladinData, Set<String> selectedHeroNames) {
+        if (paladinData.isEmpty()) {
+            error.noPaladinHero();
+            return null;
+        }
 
-                // Filter out already selected heroes
-                List<String[]> availablePaladins = new ArrayList<>();
-                for (String[] paladin : paladinData) {
-                    if (!selectedHeroNames.contains(paladin[0])) {
-                        availablePaladins.add(paladin);
-                    }
-                }
-
-                if (availablePaladins.isEmpty()) {
-                    System.out.println(c.Red + "All paladins have been selected! Choose a different type." + c.Reset);
-                    return null;
-                }
+        List<String[]> availablePaladins = filterAvailableHeroes(paladinData, selectedHeroNames);
+        if (availablePaladins.isEmpty()) {
+            System.out.println(c.Red + "All paladins have been selected! Choose a different type." + c.Reset);
+            return null;
+        }
 
                 Display.selectHero(availablePaladins);
                 int paladinChoice = Input.getHeroChoice(availablePaladins.size());
@@ -229,19 +238,12 @@ public class LegendsOfValor {
                     return null;
                 }
 
-                return new Paladin(paladin[0], Integer.parseInt(paladin[1]),
-                        Integer.parseInt(paladin[2]), Integer.parseInt(paladin[3]),
-                        Integer.parseInt(paladin[4]), Integer.parseInt(paladin[5]),
-                        Integer.parseInt(paladin[6]));
-
-            default:
-                return null;
-        }
+        return new Paladin(paladin[0], Integer.parseInt(paladin[1]),
+                Integer.parseInt(paladin[2]), Integer.parseInt(paladin[3]),
+                Integer.parseInt(paladin[4]), Integer.parseInt(paladin[5]),
+                Integer.parseInt(paladin[6]));
     }
 
-    /**
-     * Assigns heroes to their designated lanes.
-     */
     /**
      * Assigns heroes to their designated lanes.
      */
@@ -311,22 +313,10 @@ public class LegendsOfValor {
     }
 
     /**
-     * Gets the highest level among all heroes.
-     */
-    private int getHighestHeroLevel() {
-        int maxLevel = 1;
-        for (Hero hero : heroes) {
-            if (hero.getLevel() > maxLevel) {
-                maxLevel = hero.getLevel();
-            }
-        }
-        return maxLevel;
-    }
-
-    /**
      * Main game loop.
      */
-    private void gameLoop() {
+    @Override
+    protected void gameLoop() {
         System.out.println();
         System.out.println(c.Green + c.Bold + "═══ GAME START ═══" + c.Reset);
         System.out.println();
@@ -338,6 +328,15 @@ public class LegendsOfValor {
                 break;
             }
         }
+    }
+
+    /**
+     * Checks if the game is over.
+     * @return true if the game is over, false otherwise.
+     */
+    @Override
+    protected boolean isGameOver() {
+        return battleSystem.isGameOver();
     }
 
     /**

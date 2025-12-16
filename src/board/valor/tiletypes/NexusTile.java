@@ -1,3 +1,10 @@
+/**
+ * Filename: NexusTile.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Tile type representing the nexus (spawn point) for heroes or monsters.
+ */
+
 package board.valor.tiletypes;
 
 import board.valor.ValorTileType;
@@ -37,7 +44,7 @@ public class NexusTile implements ValorTileType {
     
     @Override
     public String getTypeName() {
-        return isHeroesNexus ? "Heroes' Nexus" : "Monsters' Nexus";
+        return isHeroesNexus() ? "Heroes' Nexus" : "Monsters' Nexus";
     }
     
     public boolean isHeroesNexus() {

@@ -1,6 +1,14 @@
-package board.valor;
+/**
+ * Filename: HeroMovementStrategy.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Strategy implementation for hero movement on the board.
+ */
 
-import board.common.MovementStrategy;
+package Strategy;
+
+import board.valor.ValorBoard;
+import Wrapper.HeroWrapper;
 import board.common.BoardEntity;
 import board.common.BoardUtilities;
 

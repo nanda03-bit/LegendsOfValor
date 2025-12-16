@@ -1,4 +1,11 @@
-package board.valor;
+/**
+ * Filename: MonsterWrapper.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Wrapper class that adds board position information to Monster objects.
+ */
+
+package Wrapper;
 
 import board.common.BoardEntity;
 import Player.Monsters.Monster;
@@ -50,4 +57,3 @@ public class MonsterWrapper implements BoardEntity {
         return monsterIndex;
     }
 }
-

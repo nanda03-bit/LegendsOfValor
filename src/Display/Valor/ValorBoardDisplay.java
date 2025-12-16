@@ -1,10 +1,18 @@
+/**
+ * Filename: ValorBoardDisplay.java
+ * Author: Nandana Shashi
+ * Date: 2025-Dec
+ * Description: Handles the display and formatting of the Legends of Valor game board.
+ */
+
 package Display.Valor;
 
 import board.valor.ValorBoard;
 import board.valor.ValorTile;
-import board.valor.HeroWrapper;
-import board.valor.MonsterWrapper;
+import Wrapper.HeroWrapper;
+import Wrapper.MonsterWrapper;
 import board.common.BoardEntity;
+import board.valor.ValorBoardUtilities;
 import Color.Color;
 
 public class ValorBoardDisplay {
@@ -13,7 +21,7 @@ public class ValorBoardDisplay {
     public static void printBoard(ValorBoard board) {
         System.out.println();
         System.out.println(c.Cyan + "----------------------------------------------------------------" + c.Reset);
-        System.out.println(c.Cyan + "                    LEGENDS OF VALOR BOARD                  " + c.Reset);
+        System.out.println(c.Cyan + "                     LEGENDS OF VALOR BOARD                  " + c.Reset);
         System.out.println(c.Cyan + "----------------------------------------------------------------" + c.Reset);
         System.out.println();
         
@@ -57,50 +65,100 @@ public class ValorBoardDisplay {
             }
         }
         
-        System.out.print("    ");
+        // Build list of visible columns (excluding wall columns)
+        java.util.List<Integer> visibleColumns = new java.util.ArrayList<>();
         for (int col = 0; col < board.getSize(); col++) {
-            System.out.print(String.format("%-6s", "Col" + col));
+            if (!ValorBoardUtilities.isWallColumn(col)) {
+                visibleColumns.add(col);
+            }
+        }
+        
+        // Print header row with column numbers (only visible columns)
+        System.out.print("      ");
+        for (int col : visibleColumns) {
+            System.out.print(String.format("  Col%-2d  ", col));
         }
         System.out.println();
         
+        // Print top separator line
+        System.out.print("      ");
+        for (int i = 0; i < visibleColumns.size(); i++) {
+            System.out.print("---------");
+        }
+        System.out.println();
+        
+        // Print board rows
         for (int row = 0; row < board.getSize(); row++) {
-            System.out.print(String.format("%2d  ", row));
-            for (int col = 0; col < board.getSize(); col++) {
+            System.out.print(String.format("Row %2d ", row));
+            System.out.print("|");
+            for (int i = 0; i < visibleColumns.size(); i++) {
+                int col = visibleColumns.get(i);
                 String content = display[row][col];
+                String formattedContent;
                 
                 if (content.startsWith("H")) {
-                    System.out.print(c.Green + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Green + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.startsWith("M")) {
-                    System.out.print(c.Red + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Red + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.contains("H") && content.contains("M")) {
-                    System.out.print(c.Yellow + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Yellow + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.equals("N")) {
-                    System.out.print(c.Blue + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Blue + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.equals("I")) {
-                    System.out.print(c.Brown + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Brown + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.equals("B")) {
-                    System.out.print(c.LightGreen + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.LightPink + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.equals("C")) {
-                    System.out.print(c.Purple + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.LightBlue + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.equals("K")) {
-                    System.out.print(c.Orange + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Orange + String.format("  %-5s", content) + c.Reset;
                 } 
                 else if (content.equals("O")) {
-                    System.out.print(c.Pink + String.format("%-6s", content) + c.Reset);
+                    formattedContent = c.Violet + String.format("  %-5s", content) + c.Reset;
                 } 
                 else {
-                    System.out.print(String.format("%-6s", content));
+                    formattedContent = String.format("  %-5s", content);
+                }
+                
+                System.out.print(formattedContent);
+                
+                // Print vertical separator after each column, except between columns in the same lane
+                // Lanes: 0-1 (no separator between), 3-4 (no separator between), 6-7 (no separator between)
+                boolean showSeparator = true;
+                if (i < visibleColumns.size() - 1) {
+                    int currentCol = visibleColumns.get(i);
+                    int nextCol = visibleColumns.get(i + 1);
+                    // Check if current and next columns are in the same lane
+                    int currentLane = ValorBoardUtilities.getLaneForColumn(currentCol);
+                    int nextLane = ValorBoardUtilities.getLaneForColumn(nextCol);
+                    if (currentLane != -1 && currentLane == nextLane) {
+                        showSeparator = false; // Same lane, no separator
+                    }
+                }
+                
+                if (showSeparator) {
+                    System.out.print("|");
+                } else {
+                    System.out.print(" "); // Space instead of separator for same-lane columns
                 }
             }
             System.out.println();
+            System.out.println(); // Empty line after each row
         }
+        
+        // Print bottom separator line
+        System.out.print("      ");
+        for (int i = 0; i < visibleColumns.size(); i++) {
+            System.out.print("---------");
+        }
+        System.out.println();
         
         System.out.println();
         System.out.println(c.Bold + "Legend:" + c.Reset);
@@ -108,10 +166,10 @@ public class ValorBoardDisplay {
         System.out.println(c.Red + "  M1, M2, M3..." + c.Reset + " - Monsters");
         System.out.println(c.Blue + "  N" + c.Reset + " - Nexus");
         System.out.println(c.Brown + "  I" + c.Reset + " - Inaccessible (Wall)");
-        System.out.println(c.Pink + "  O" + c.Reset + " - Obstacle");
+        System.out.println(c.Violet + "  O" + c.Reset + " - Obstacle");
         System.out.println("  P - Plain");
-        System.out.println(c.LightGreen + "  B" + c.Reset + " - Bush (Dexterity +10%)");
-        System.out.println(c.Purple + "  C" + c.Reset + " - Cave (Agility +10%)");
+        System.out.println(c.LightPink + "  B" + c.Reset + " - Bush (Dexterity +10%)");
+        System.out.println(c.LightBlue + "  C" + c.Reset + " - Cave (Agility +10%)");
         System.out.println(c.Orange + "  K" + c.Reset + " - Koulou (Strength +10%)");
         System.out.println();
     }

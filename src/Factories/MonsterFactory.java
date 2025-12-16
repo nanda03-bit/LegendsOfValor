@@ -1,3 +1,10 @@
+/**
+ * Filename: MonsterFactory.java
+ * Author: Olivia Ma
+ * Date: 2025-Dec
+ * Description: Factory class for creating monster instances based on type.
+ */
+
 package Factories;
 import Player.Monsters.*;
 

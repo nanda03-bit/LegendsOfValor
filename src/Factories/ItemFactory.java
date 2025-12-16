@@ -1,3 +1,10 @@
+/**
+ * Filename: ItemFactory.java
+ * Author: Olivia Ma
+ * Date: 2025-Dec
+ * Description: Factory class for creating item instances (weapons, armor, potions, spells).
+ */
+
 package Factories;
 
 import Items.*;

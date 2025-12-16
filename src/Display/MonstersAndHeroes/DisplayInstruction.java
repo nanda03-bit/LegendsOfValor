@@ -1,3 +1,10 @@
+/**
+ * Filename: DisplayInstruction.java
+ * Author: Nandana Shashi
+ * Date: 2025-Nov-05
+ * Description: Displays game instructions and welcome messages for Monsters and Heroes.
+ */
+
 package Display.MonstersAndHeroes;
 
 import Color.Color;
