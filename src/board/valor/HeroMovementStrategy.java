@@ -11,96 +11,80 @@ public class HeroMovementStrategy implements MovementStrategy {
         if (!(entity instanceof HeroWrapper)) {
             return false;
         }
-        
+
         HeroWrapper hero = (HeroWrapper) entity;
         int currentRow = hero.getRow();
         int currentCol = hero.getCol();
-        
+
         int newRow = currentRow;
         int newCol = currentCol;
-        
+
         switch (direction) {
-            case 'N': 
-                newRow--; 
+            case 'N':
+                newRow--;
                 break;
-            case 'S': 
-                newRow++; 
+            case 'S':
+                newRow++;
                 break;
-            case 'E': 
-                newCol++; 
+            case 'E':
+                newCol++;
                 break;
-            case 'W': 
-                newCol--; 
+            case 'W':
+                newCol--;
                 break;
-            default: 
+            default:
                 return false;
         }
-        
+
         if (!isValidMove(board, entity, newRow, newCol)) {
             return false;
         }
         return board.moveEntityTo(hero, newRow, newCol);
     }
-    
+
     @Override
     public boolean isValidMove(ValorBoard board, BoardEntity entity, int newRow, int newCol) {
         if (!(entity instanceof HeroWrapper)) {
             return false;
         }
-        
+
         HeroWrapper hero = (HeroWrapper) entity;
         int currentRow = hero.getRow();
         int currentCol = hero.getCol();
-        
+
         if (!BoardUtilities.isValidCoordinate(newRow, newCol, board.getSize())) {
             return false;
         }
-        
+
         if (!board.getTile(newRow, newCol).canEnter()) {
             return false;
         }
-        
+
         if (board.getTile(newRow, newCol).hasHero()) {
             return false;
         }
 
-        // Check if target has a monster (heroes can't move into monster tiles - they must attack)
-        if (board.getTile(newRow, newCol).hasMonster()) {
-            return false;
-        }
+        // RULE: Heroes cannot move forward (north) past monsters in their LANE.
+        // They must defeat any monster at or behind them before advancing.
 
-        // Heroes cannot move through or past monsters
-        // Check the space between current position and target
-        // For orthogonal movement (not diagonal), check if there's a monster in the path
+        if (newRow < currentRow) {
+            // Moving NORTH - check if there's any monster at hero's row or BEHIND (south)
+            // in the same LANE (both columns of the lane).
 
-        if (newRow < currentRow) { // Moving north
-            // Check if there's a monster directly north that would block
-            for (int r = currentRow - 1; r >= newRow; r--) {
-                if (board.getTile(r, currentCol).hasMonster()) {
-                    return false; // Monster blocks the path
-                }
+            // Determine which columns belong to hero's lane
+            int laneCol1, laneCol2;
+            if (currentCol <= 1) {
+                laneCol1 = 0; laneCol2 = 1;  // Lane 1
+            } else if (currentCol <= 4) {
+                laneCol1 = 3; laneCol2 = 4;  // Lane 2
+            } else {
+                laneCol1 = 6; laneCol2 = 7;  // Lane 3
             }
-        } else if (newRow > currentRow) { // Moving south
-            // Check if there's a monster directly south that would block
-            for (int r = currentRow + 1; r <= newRow; r++) {
-                if (board.getTile(r, currentCol).hasMonster()) {
-                    return false; // Monster blocks the path
-                }
-            }
-        }
 
-        if (newCol < currentCol) { // Moving west
-            // Check if there's a monster directly west that would block
-            for (int c = currentCol - 1; c >= newCol; c--) {
-                if (board.getTile(currentRow, c).hasMonster()) {
-                    return false; // Monster blocks the path
-                }
-            }
-        } else if (newCol > currentCol) { // Moving east
-            // Check if there's a monster directly east that would block
-            for (int c = currentCol + 1; c <= newCol; c++) {
-                if (board.getTile(currentRow, c).hasMonster()) {
-                    return false; // Monster blocks the path
+            // Check both columns of the lane for monsters at or behind the hero
+            for (int row = currentRow; row < board.getSize(); row++) {
+                if (board.getTile(row, laneCol1).hasMonster() || board.getTile(row, laneCol2).hasMonster()) {
+                    return false; // Monster at or behind hero in same lane - cannot advance
                 }
             }
         }

@@ -5,16 +5,21 @@
  * Description: Abstract class defining attributes and behaviors shared by all hero types.
  */
 
- package Player.Heroes;
+package Player.Heroes;
 
 import Player.Character;
+import Player.Attackable;
 import Items.*;
 import Utilities.MonstersAndHeroesGameConstants;
 import Utilities.Percentages;
 
 import java.util.*;
 
-public class Hero extends Character{
+/**
+ * Base class for all hero types.
+ * Implements Attackable to allow unified attack mechanics with monsters.
+ */
+public class Hero extends Character {
     private int mp;
     private int strength;
     private int dexterity;
@@ -31,14 +36,15 @@ public class Hero extends Character{
 
     /**
      * Constructor for the Hero class.
-     * @param name The name of the hero.
-     * @param level The starting level of the hero.
-     * @param hp The starting health points of the hero.
-     * @param mp The starting mana points of the hero.
-     * @param strength The starting strength of the hero.
-     * @param dexterity The starting dexterity of the hero.
-     * @param agility The starting agility of the hero.
-     * @param gold The starting gold of the hero.
+     *
+     * @param name       The name of the hero.
+     * @param level      The starting level of the hero.
+     * @param hp         The starting health points of the hero.
+     * @param mp         The starting mana points of the hero.
+     * @param strength   The starting strength of the hero.
+     * @param dexterity  The starting dexterity of the hero.
+     * @param agility    The starting agility of the hero.
+     * @param gold       The starting gold of the hero.
      * @param experience The starting experience of the hero.
      */
     public Hero(String name, int level, int hp, int mp, int strength, int dexterity, int agility, int gold, int experience) {
@@ -54,71 +60,101 @@ public class Hero extends Character{
     }
 
     /**
+     * Calculates damage for Attackable interface.
+     *
+     * @return The calculated damage value.
+     */
+    @Override
+    public int calculateDamage() {
+        return attackDamage(this);
+    }
+
+    /**
+     * Gets the defense value for Attackable interface.
+     * Uses agility for dodge calculations.
+     *
+     * @return The agility value used for defense.
+     */
+    @Override
+    public int getDefenseValue() {
+        return (int) (agility * dodgeDebuff);
+    }
+
+    /**
      * Gets the current mana points of the hero.
+     *
      * @return The current mana points.
      */
-    public int getMp(){
+    public int getMp() {
         return mp;
     }
 
     /**
      * Gets the maximum mana points of the hero.
+     *
      * @return The maximum mana points.
      */
-    public int getMaxMp(){
+    public int getMaxMp() {
         return maxMp;
     }
 
     /**
      * Gets the strength of the hero.
+     *
      * @return The strength of the hero.
      */
-    public int getStrength(){
+    public int getStrength() {
         return strength;
     }
 
     /**
      * Gets the dexterity of the hero.
+     *
      * @return The dexterity of the hero.
      */
-    public int getDexterity(){
+    public int getDexterity() {
         return dexterity;
     }
 
     /**
      * Gets the agility of the hero.
+     *
      * @return The agility of the hero.
      */
-    public int getAgility(){
+    public int getAgility() {
         return agility;
     }
 
     /**
      * Gets the amount of gold the hero has.
+     *
      * @return The amount of gold.
      */
-    public int getGold(){
+    public int getGold() {
         return gold;
     }
 
     /**
      * Gets the experience points of the hero.
+     *
      * @return The experience points.
      */
-    public int getExperience(){
+    public int getExperience() {
         return experience;
     }
 
     /**
      * Gets the inventory of the hero.
+     *
      * @return A list of items in the hero's inventory.
      */
-    public List<Item> getInventory(){
+    public List<Item> getInventory() {
         return inventory;
     }
 
     /**
      * Gets the currently equipped weapon of the hero.
+     *
      * @return The equipped weapon, or null if no weapon is equipped.
      */
     public Weapon getEquippedWeapon() {
@@ -127,6 +163,7 @@ public class Hero extends Character{
 
     /**
      * Gets the currently equipped armor of the hero.
+     *
      * @return The equipped armor, or null if no armor is equipped.
      */
     public Armor getEquippedArmor() {
@@ -135,6 +172,7 @@ public class Hero extends Character{
 
     /**
      * Gets the attack debuff multiplier for the hero.
+     *
      * @return The attack debuff multiplier.
      */
     public double getAttackDebuff() {
@@ -143,6 +181,7 @@ public class Hero extends Character{
 
     /**
      * Gets the dodge debuff multiplier for the hero.
+     *
      * @return The dodge debuff multiplier.
      */
     public double getDodgeDebuff() {
@@ -151,6 +190,7 @@ public class Hero extends Character{
 
     /**
      * Sets the current mana points of the hero.
+     *
      * @param mp The new mana points value.
      */
     public void setMp(int mp) {
@@ -159,6 +199,7 @@ public class Hero extends Character{
 
     /**
      * Sets the strength of the hero.
+     *
      * @param strength The new strength value.
      */
     public void setStrength(int strength) {
@@ -167,6 +208,7 @@ public class Hero extends Character{
 
     /**
      * Sets the dexterity of the hero.
+     *
      * @param dexterity The new dexterity value.
      */
     public void setDexterity(int dexterity) {
@@ -175,6 +217,7 @@ public class Hero extends Character{
 
     /**
      * Sets the agility of the hero.
+     *
      * @param agility The new agility value.
      */
     public void setAgility(int agility) {
@@ -183,6 +226,7 @@ public class Hero extends Character{
 
     /**
      * Sets the amount of gold the hero has.
+     *
      * @param gold The new amount of gold.
      */
     public void setGold(int gold) {
@@ -191,6 +235,7 @@ public class Hero extends Character{
 
     /**
      * Adds experience points to the hero and levels up if the experience threshold is met.
+     *
      * @param experience The amount of experience to add.
      */
     public void addExperience(int experience) {
@@ -204,19 +249,20 @@ public class Hero extends Character{
     /**
      * Levels up the hero, increasing their stats and resetting their HP and MP.
      */
+    @Override
     public void levelUp() {
         int oldLevel = getLevel();
         super.levelUp();
         int newLevel = getLevel();
-        
+
         // Reset HP to level * HP_PER_LEVEL
         setMaxHp(newLevel * MonstersAndHeroesGameConstants.HP_PER_LEVEL);
         setHp(getMaxHp());
-        
+
         // Increase MP by MP_INCREASE_ON_LEVEL_UP
         maxMp = (int) (maxMp * MonstersAndHeroesGameConstants.MP_INCREASE_ON_LEVEL_UP);
         setMp(maxMp);
-        
+
         // Stat increases are handled in subclasses
         System.out.println(getName() + " leveled up from " + oldLevel + " to " + newLevel + "!");
         System.out.println();
@@ -224,6 +270,7 @@ public class Hero extends Character{
 
     /**
      * Equips a weapon to the hero.
+     *
      * @param weapon The weapon to equip.
      */
     public void equipWeapon(Weapon weapon) {
@@ -232,6 +279,7 @@ public class Hero extends Character{
 
     /**
      * Equips an armor to the hero.
+     *
      * @param armor The armor to equip.
      */
     public void equipArmor(Armor armor) {
@@ -240,6 +288,7 @@ public class Hero extends Character{
 
     /**
      * Buys an item and adds it to the hero's inventory.
+     *
      * @param item The item to buy.
      */
     public void buyItem(Item item) {
@@ -249,6 +298,7 @@ public class Hero extends Character{
 
     /**
      * Sells an item from the hero's inventory.
+     *
      * @param item The item to sell.
      */
     public void sellItem(Item item) {
@@ -258,6 +308,7 @@ public class Hero extends Character{
 
     /**
      * Calculates the experience points gained from defeating a number of monsters.
+     *
      * @param count The number of monsters defeated.
      * @return The total experience points gained.
      */
@@ -267,6 +318,7 @@ public class Hero extends Character{
 
     /**
      * Calculates the gold reward based on the highest monster level in a battle.
+     *
      * @param highestLevel The highest level of a monster in the battle.
      * @return The amount of gold rewarded.
      */
@@ -276,18 +328,20 @@ public class Hero extends Character{
 
     /**
      * Calculates the hero's HP after being revived.
+     *
      * @return The HP after revival.
      */
     public int hpAfterDeath() {
-        return (int)(getMaxHp() * MonstersAndHeroesGameConstants.DEATH_HP_PENALTY);
+        return (int) (getMaxHp() * MonstersAndHeroesGameConstants.DEATH_HP_PENALTY);
     }
 
     /**
      * Calculates the hero's MP after being revived.
+     *
      * @return The MP after revival.
      */
     public int mpAfterDeath() {
-        return (int)(getMaxMp() * MonstersAndHeroesGameConstants.DEATH_MP_PENALTY);
+        return (int) (getMaxMp() * MonstersAndHeroesGameConstants.DEATH_MP_PENALTY);
     }
 
     /**
@@ -315,65 +369,79 @@ public class Hero extends Character{
         }
     }
 
-    // Compute attackDamage for a given hero, matching Battle's usage pattern
+    /**
+     * Compute attackDamage for a given hero.
+     *
+     * @param hero The hero to calculate damage for.
+     * @return The calculated damage.
+     */
     public static int attackDamage(Hero hero) {
         int weaponDamage = 0;
         Weapon w = hero.getEquippedWeapon();
         if (w != null) {
             weaponDamage = w.getDamage();
         }
-        // Base damage calculation used elsewhere: (strength + weaponDamage) * attackDebuff * Percentages.DAMAGE
         double base = (hero.getStrength() + weaponDamage) * hero.getAttackDebuff() * Percentages.DAMAGE;
         int baseDamage = (int) base;
         return baseDamage;
     }
 
-
-    // Compute spell damage for a hero and the chosen spell
+    /**
+     * Compute spell damage for a hero and the chosen spell.
+     *
+     * @param hero  The hero casting the spell.
+     * @param spell The spell being cast.
+     * @return The calculated spell damage.
+     */
     public static int spellDamage(Hero hero, Spell spell) {
-        // encouraged in Battle: spellDamageMultiplier = 1 + (dexterity / 10000)
-        double spellDamageMultiplier = 1.0 + ((double)hero.getDexterity() / 10000.0);
-        int spellDamage = (int)(spell.getDamage() * spellDamageMultiplier);
+        double spellDamageMultiplier = 1.0 + ((double) hero.getDexterity() / 10000.0);
+        int spellDamage = (int) (spell.getDamage() * spellDamageMultiplier);
         return spellDamage;
     }
 
-    
-    // Terrain buff / removal helpers
-    // Terrain buffs use a Decorator-style composition approach.
+    /**
+     * Applies terrain buff to a hero.
+     *
+     * @param hero        The hero to buff.
+     * @param terrainType The type of terrain.
+     */
     public static void applyTerrainBuff(Hero hero, String terrainType) {
-        // In the project the tiles themselves call applyTerrainBonus(hero).
         double mult = Utilities.ValorBoardConstants.TERRAIN_BONUS_MULTIPLIER;
-        switch(terrainType.toLowerCase()) {
+        switch (terrainType.toLowerCase()) {
             case "bush":
-                hero.setDexterity((int)(hero.getDexterity() * mult));
+                hero.setDexterity((int) (hero.getDexterity() * mult));
                 break;
             case "cave":
-                hero.setAgility((int)(hero.getAgility() * mult));
+                hero.setAgility((int) (hero.getAgility() * mult));
                 break;
             case "koulou":
-                hero.setStrength((int)(hero.getStrength() * mult));
+                hero.setStrength((int) (hero.getStrength() * mult));
                 break;
             default:
                 break;
         }
     }
 
-
+    /**
+     * Removes terrain buff from a hero.
+     *
+     * @param hero        The hero to remove buff from.
+     * @param terrainType The type of terrain.
+     */
     public static void removeTerrainBuff(Hero hero, String terrainType) {
         double mult = Utilities.ValorBoardConstants.TERRAIN_BONUS_MULTIPLIER;
-        switch(terrainType.toLowerCase()) {
+        switch (terrainType.toLowerCase()) {
             case "bush":
-                hero.setDexterity((int)(hero.getDexterity() / mult));
+                hero.setDexterity((int) (hero.getDexterity() / mult));
                 break;
             case "cave":
-                hero.setAgility((int)(hero.getAgility() / mult));
+                hero.setAgility((int) (hero.getAgility() / mult));
                 break;
             case "koulou":
-                hero.setStrength((int)(hero.getStrength() / mult));
+                hero.setStrength((int) (hero.getStrength() / mult));
                 break;
             default:
                 break;
         }
     }
 }
-
